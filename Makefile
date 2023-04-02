@@ -41,28 +41,13 @@ img/out/assets_icons.c \
 lib/lcd-st7920/st7920.c \
 stm/Core/Src/main.c \
 stm/Core/Src/stm32f4xx_it.c \
-stm/Core/Src/stm32f4xx_hal_msp.c \
 stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_gpio.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c \
 stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_rcc.c \
 stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.c \
 stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c \
-stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c \
-stm/Core/Src/system_stm32f4xx.c  
+stm/Core/Src/system_stm32f4xx.c \
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_spi.c \
+Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_dma.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -111,8 +96,18 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DUSE_FULL_LL_DRIVER \
--DUSE_HAL_DRIVER \
--DSTM32F401xE
+-DSTM32F401xE \
+-DHSE_VALUE=25000000 \
+-DHSE_STARTUP_TIMEOUT=100 \
+-DLSE_STARTUP_TIMEOUT=5000 \
+-DLSE_VALUE=32768 \
+-DEXTERNAL_CLOCK_VALUE=12288000 \
+-DHSI_VALUE=16000000 \
+-DLSI_VALUE=32000 \
+-DVDD_VALUE=3300 \
+-DPREFETCH_ENABLE=1 \
+-DINSTRUCTION_CACHE_ENABLE=1 \
+-DDATA_CACHE_ENABLE=1
 
 
 # AS includes
@@ -125,7 +120,6 @@ C_INCLUDES =  \
 -Ilib/lcd-st7920 \
 -Iimg/out \
 -Istm/Drivers/STM32F4xx_HAL_Driver/Inc \
--Istm/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy \
 -Istm/Drivers/CMSIS/Device/ST/STM32F4xx/Include \
 -Istm/Drivers/CMSIS/Include
 
