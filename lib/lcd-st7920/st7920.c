@@ -6,8 +6,8 @@
 #include <string.h>
 #include "st7920.h"
 
-#define RST_PIN GLCD_RST_Pin
-#define RST_PORT GLCD_RST_GPIO_Port
+#define RST_PIN LL_GPIO_PIN_13
+#define RST_PORT GPIOB
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
