@@ -38,6 +38,10 @@ BUILD_DIR = build
 C_SOURCES =  \
 src/app.c \
 src/display.c \
+src/scene_manager.c \
+src/animation_manager.c \
+src/scenes/app_scene.c \
+src/scenes/app_scene_start.c \
 img/out/assets_icons.c \
 lib/lcd-st7920/st7920.c \
 stm/Core/Src/main.c \
@@ -119,6 +123,7 @@ C_INCLUDES =  \
 -Istm/Core/Inc \
 -Isrc \
 -Ilib/lcd-st7920 \
+-Ilib/mlib \
 -Iimg/out \
 -Istm/Drivers/STM32F4xx_HAL_Driver/Inc \
 -Istm/Drivers/CMSIS/Device/ST/STM32F4xx/Include \
