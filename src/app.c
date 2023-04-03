@@ -1,6 +1,9 @@
-#include "my_main.h"
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stm32f4xx_ll_gpio.h>
+#include <stm32f4xx_ll_spi.h>
 #include <stm32f4xx_ll_utils.h>
-#include "st7920.h"
+#include "app.h"
 #include "assets_icons.h"
 
 const uint8_t* const frames[] = {
@@ -11,14 +14,24 @@ const uint8_t* const frames[] = {
     _I_frame_24_0, _I_frame_25_0, _I_frame_26_0, _I_frame_27_0, _I_frame_28_0, _I_frame_29_0,
     _I_frame_30_0, _I_frame_31_0, _I_frame_32_0, _I_frame_33_0, _I_frame_34_0, _I_frame_35_0};
 
-void my_main(void) {
-    st7920_init();
-    st7920_graphic_mode(true);
+App* app_alloc(void) {
+    App* app = malloc(sizeof(App));
+    app->display = display_alloc(SPI2, GPIOB, LL_GPIO_PIN_13);
+    display_init(app->display);
+    return app;
+}
+
+void app_run(App* app) {
     while(true) {
         for(uint8_t cur = 0; cur < 36; cur++) {
-            st7920_draw_image(frames[cur], 1024);
-            st7920_update();
+            display_draw_image(app->display, frames[cur], 1024);
+            display_sync_framebuffer(app->display);
             LL_mDelay(300);
         }
     }
+}
+
+void app_free(App* app) {
+    display_free(app->display);
+    free(app);
 }

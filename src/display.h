@@ -1,0 +1,20 @@
+#pragma once
+#include <stm32f4xx_ll_gpio.h>
+#include <stm32f4xx_ll_spi.h>
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define FRAME_BUFFER_SIZE ((SCREEN_WIDTH * SCREEN_HEIGHT) / 8)
+
+typedef struct {
+    SPI_TypeDef* SPI;
+    GPIO_TypeDef* reset_pin_port;
+    uint32_t reset_pin;
+    uint8_t* frame_buffer;
+} Display;
+
+Display* display_alloc(SPI_TypeDef* SPI, GPIO_TypeDef* reset_pin_port, uint32_t reset_pin);
+void display_init(Display* display);
+void display_draw_image(Display* display, const uint8_t* image, uint16_t image_size);
+void display_sync_framebuffer(Display* display);
+void display_free(Display* display);

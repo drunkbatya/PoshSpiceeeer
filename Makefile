@@ -36,7 +36,8 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
-src/my_main.c \
+src/app.c \
+src/display.c \
 img/out/assets_icons.c \
 lib/lcd-st7920/st7920.c \
 stm/Core/Src/main.c \

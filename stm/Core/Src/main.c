@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "my_main.h"
+#include "app.h"
 
 /* USER CODE END Includes */
 
@@ -95,8 +95,8 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
-  my_main();
-
+  App* app = app_alloc();
+  app_run(app);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -105,6 +105,8 @@ int main(void)
   {
     /* USER CODE END WHILE */
 
+    app_free(app);
+    break;
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
