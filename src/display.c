@@ -31,7 +31,6 @@ void display_sync_framebuffer(Display* display) {
     st7920_draw_bitmap(display->frame_buffer);
 }
 
-
 void display_free(Display* display) {
     LL_SPI_Disable(display->SPI);
     free(display->frame_buffer);
