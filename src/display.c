@@ -9,6 +9,7 @@ Display* display_alloc(SPI_TypeDef* SPI, GPIO_TypeDef* reset_pin_port, uint32_t 
     display->reset_pin_port = reset_pin_port;
     display->reset_pin = reset_pin;
     display->frame_buffer = malloc(FRAME_BUFFER_SIZE);
+    display->draw_callback = NULL;
     return display;
 }
 
@@ -35,4 +36,12 @@ void display_free(Display* display) {
     LL_SPI_Disable(display->SPI);
     free(display->frame_buffer);
     free(display);
+}
+
+void display_set_draw_callback(Display* display, DisplayDrawCallback draw_callback) {
+    display->draw_callback = draw_callback;
+}
+
+void display_execute_draw_callback(Display* display) {
+    if(display->draw_callback) display->draw_callback(display);
 }

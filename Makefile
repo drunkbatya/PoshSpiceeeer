@@ -205,13 +205,13 @@ flash-dfu: all
 .PHONY: lint
 lint:
 	find . -type f \( -name "*.c" -o -name "*.h" \) \
-		\( -path "./lib/*" -o -path "./src/*" \) \
+		\( -path "./lib/lcd-st7920/*" -o -path "./src/*" \) \
 		| xargs clang-format --Werror --style=file -i --dry-run
 
 .PHONY: format
 format:
 	find . -type f \( -name "*.c" -o -name "*.h" \) \
-		\( -path "./lib/*" -o -path "./src/*" \) \
+		\( -path "./lib/lcd-st7920/*" -o -path "./src/*" \) \
 		| xargs clang-format --Werror --style=file -i
 
 #######################################

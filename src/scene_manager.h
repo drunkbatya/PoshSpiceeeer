@@ -20,7 +20,6 @@ typedef void (*AppSceneOnEnterCallback)(void* context);
 typedef bool (*AppSceneOnEventCallback)(void* context, SceneManagerEvent event);
 typedef void (*AppSceneOnExitCallback)(void* context);
 
-
 typedef struct {
     const AppSceneOnEnterCallback* on_enter_handlers;
     const AppSceneOnEventCallback* on_event_handlers;
