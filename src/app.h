@@ -1,12 +1,12 @@
 #pragma once
 #include "display.h"
 #include "scene_manager.h"
-#include "animation_manager.h"
+#include "animation.h"
 
 typedef struct {
     Display* display;
     SceneManager* scene_manager;
-    AnimationManager* animation_manager;
+    Animation* animation;
 } App;
 
 App* app_alloc(void);

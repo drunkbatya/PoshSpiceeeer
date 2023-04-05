@@ -38,10 +38,16 @@ void display_free(Display* display) {
     free(display);
 }
 
-void display_set_draw_callback(Display* display, DisplayDrawCallback draw_callback) {
+void display_set_draw_callback(Display* display, DisplayDrawCallback draw_callback, void* context) {
     display->draw_callback = draw_callback;
+    display->context = context;
 }
 
 void display_execute_draw_callback(Display* display) {
-    if(display->draw_callback) display->draw_callback(display);
+    if(display->draw_callback) display->draw_callback(display->context);
+}
+
+void display_clear(Display* display) {
+    display_clear_framebuffer(display);
+    display_sync_framebuffer(display);
 }

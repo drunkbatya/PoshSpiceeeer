@@ -39,7 +39,7 @@ C_SOURCES =  \
 src/app.c \
 src/display.c \
 src/scene_manager.c \
-src/animation_manager.c \
+src/animation.c \
 src/scenes/app_scene.c \
 src/scenes/app_scene_start.c \
 img/out/assets_icons.c \
