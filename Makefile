@@ -51,8 +51,8 @@ stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_rcc.c \
 stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_utils.c \
 stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c \
 stm/Core/Src/system_stm32f4xx.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_spi.c \
-Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_dma.c
+stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_spi.c \
+stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_dma.c \
 
 # ASM sources
 ASM_SOURCES =  \
