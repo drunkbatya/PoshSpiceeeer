@@ -29,6 +29,10 @@ void animation_set_animation(
     animation->current_frame = 0;
 }
 
+void animation_reset_animation(Animation* animation) {
+    animation->frames = NULL;
+}
+
 uint16_t animation_get_frame_size(Animation* animation) {
     return animation->frame_size;
 }

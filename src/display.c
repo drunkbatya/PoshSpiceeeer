@@ -43,6 +43,11 @@ void display_set_draw_callback(Display* display, DisplayDrawCallback draw_callba
     display->context = context;
 }
 
+void display_reset_draw_callback(Display* display) {
+    display->draw_callback = NULL;
+    display->context = NULL;
+}
+
 void display_execute_draw_callback(Display* display) {
     if(display->draw_callback) display->draw_callback(display->context);
 }

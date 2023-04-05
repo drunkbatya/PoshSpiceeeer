@@ -18,5 +18,6 @@ void animation_set_animation(
     uint16_t frame_size,
     uint16_t total_frames,
     uint8_t frame_rate);
+void animation_reset_animation(Animation* animation);
 void animation_switch_frame(Animation* animation);
 uint16_t animation_get_frame_size(Animation* animation);

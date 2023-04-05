@@ -35,5 +35,6 @@ bool app_scene_start_on_event(void* context, SceneManagerEvent event) {
 }
 void app_scene_start_on_exit(void* context) {
     App* app = context;
-    display_set_draw_callback(app->display, NULL, NULL);
+    animation_reset_animation(app->animation);
+    display_reset_draw_callback(app->display);
 }
