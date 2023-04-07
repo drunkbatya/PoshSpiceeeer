@@ -95,6 +95,7 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
+  LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOA);
   App* app = app_alloc();
   app_run(app);
   /* USER CODE END 2 */

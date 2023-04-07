@@ -22,20 +22,26 @@ void scene_manager_next_scene(SceneManager* scene_manager, uint32_t next_scene_i
     scene_manager->scene_handlers->on_enter_handlers[next_scene_id](scene_manager->context);
 }
 
-bool scene_manager_previous_scene(SceneManager* scene_manager) {
+void scene_manager_previous_scene(SceneManager* scene_manager) {
     if(SceneManagerIdStack_size(scene_manager->scene_id_stack) > 0) {
         uint32_t cur_scene_id = 0;
         SceneManagerIdStack_pop_back(&cur_scene_id, scene_manager->scene_id_stack);
         if(SceneManagerIdStack_size(scene_manager->scene_id_stack) == 0) {
             scene_manager->scene_handlers->on_exit_handlers[cur_scene_id](scene_manager->context);
-            return false;
+            return;
         }
         uint32_t prev_scene_id = *SceneManagerIdStack_back(scene_manager->scene_id_stack);
         scene_manager->scene_handlers->on_exit_handlers[cur_scene_id](scene_manager->context);
         scene_manager->scene_handlers->on_enter_handlers[prev_scene_id](scene_manager->context);
-        return true;
-    } else {
-        return false;
+    }
+}
+
+void scene_manager_send_event_to_scene(SceneManager* scene_manager, InputEvent event) {
+    if(event == INPUT_EVENT_NONE) return;
+    if(SceneManagerIdStack_size(scene_manager->scene_id_stack) > 0) {
+        uint32_t* scene_id_p = SceneManagerIdStack_back(scene_manager->scene_id_stack);
+        uint32_t scene_id = *scene_id_p;
+        scene_manager->scene_handlers->on_event_handlers[scene_id](scene_manager->context, event);
     }
 }
 

@@ -40,9 +40,13 @@ src/app.c \
 src/display.c \
 src/scene_manager.c \
 src/animation.c \
+src/input.c \
 src/scenes/app_scene.c \
 src/scenes/app_scene_start.c \
+src/scenes/app_scene_test.c \
+src/scenes/app_scene_test_two.c \
 img/out/assets_icons.c \
+lib/fonts/haxrcorp4089.c \
 lib/lcd-st7920/st7920.c \
 stm/Core/Src/main.c \
 stm/Core/Src/stm32f4xx_it.c \
@@ -123,6 +127,7 @@ C_INCLUDES =  \
 -Istm/Core/Inc \
 -Isrc \
 -Ilib/lcd-st7920 \
+-Ilib/fonts \
 -Ilib/mlib \
 -Iimg/out \
 -Istm/Drivers/STM32F4xx_HAL_Driver/Inc \

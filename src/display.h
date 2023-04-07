@@ -19,7 +19,7 @@ typedef struct {
 
 Display* display_alloc(SPI_TypeDef* SPI, GPIO_TypeDef* reset_pin_port, uint32_t reset_pin);
 void display_init(Display* display);
-void display_draw_image(Display* display, const uint8_t* image, uint16_t image_size);
+void display_draw_frame(Display* display, const uint8_t* frame, uint16_t frame_size);
 void display_sync_framebuffer(Display* display);
 void display_free(Display* display);
 void display_set_draw_callback(Display* display, DisplayDrawCallback draw_callback, void* context);
@@ -27,3 +27,4 @@ void display_reset_draw_callback(Display* display);
 void display_execute_draw_callback(Display* display);
 void display_clear_framebuffer(Display* display);
 void display_clear(Display* display);
+void display_draw_pixel(Display* display, uint8_t x, uint8_t y);

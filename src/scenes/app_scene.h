@@ -1,6 +1,7 @@
 #pragma once
 
 #include <scene_manager.h>
+#include <input.h>
 
 // Generate scene id and total number
 #define ADD_SCENE(prefix, name, id) Scene##id,
@@ -19,7 +20,7 @@ extern const SceneManagerHandlers scene_handlers;
 
 // Generate scene on_event handlers declaration
 #define ADD_SCENE(prefix, name, id) \
-    bool prefix##_scene_##name##_on_event(void* context, SceneManagerEvent event);
+    void prefix##_scene_##name##_on_event(void* context, InputEvent event);
 #include "app_scene_config.h"
 #undef ADD_SCENE
 

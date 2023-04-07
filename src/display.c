@@ -24,8 +24,17 @@ void display_init(Display* display) {
     display_clear_framebuffer(display);
 }
 
-void display_draw_image(Display* display, const uint8_t* image, uint16_t image_size) {
-    memcpy(display->frame_buffer, image, image_size);
+void display_draw_frame(Display* display, const uint8_t* frame, uint16_t frame_size) {
+    memcpy(display->frame_buffer, frame, frame_size);
+}
+
+void displat_draw_icon(
+    Display* display,
+    const uint8_t* icon,
+    uint8_t x,
+    uint8_t y,
+    uint8_t width,
+    uint8_t height) {
 }
 
 void display_sync_framebuffer(Display* display) {
@@ -55,4 +64,10 @@ void display_execute_draw_callback(Display* display) {
 void display_clear(Display* display) {
     display_clear_framebuffer(display);
     display_sync_framebuffer(display);
+}
+
+void display_draw_pixel(Display* display, uint8_t x, uint8_t y) {
+    uint8_t slash_x = (x / 8);
+    uint8_t percent_x = (x % 8);
+    display->frame_buffer[slash_x + (y * (SCREEN_WIDTH / 8))] |= (1 << percent_x);
 }
