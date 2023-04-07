@@ -3,13 +3,14 @@
 #include "st7920.h"
 #include "display.h"
 
-Display* display_alloc(SPI_TypeDef* SPI, GPIO_TypeDef* reset_pin_port, uint32_t reset_pin) {
+Display* display_alloc(SPI_TypeDef* SPI, GPIO_TypeDef* reset_pin_port, uint32_t reset_pin, TIM_TypeDef* timer, GPIO_TypeDef* timer_pin_port, uint32_t timer_pin) {
     Display* display = malloc(sizeof(Display));
     display->SPI = SPI;
     display->reset_pin_port = reset_pin_port;
     display->reset_pin = reset_pin;
     display->frame_buffer = malloc(FRAME_BUFFER_SIZE);
     display->draw_callback = NULL;
+    display->pwm = pwm_init_alloc(timer, timer_pin_port, timer_pin);
     return display;
 }
 
@@ -43,6 +44,7 @@ void display_sync_framebuffer(Display* display) {
 
 void display_free(Display* display) {
     LL_SPI_Disable(display->SPI);
+    pwm_free(display->pwm);
     free(display->frame_buffer);
     free(display);
 }

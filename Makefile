@@ -41,6 +41,7 @@ src/display.c \
 src/scene_manager.c \
 src/animation.c \
 src/input.c \
+src/pwm.c \
 src/scenes/app_scene.c \
 src/scenes/app_scene_start.c \
 src/scenes/app_scene_test.c \
@@ -57,6 +58,7 @@ stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_exti.c \
 stm/Core/Src/system_stm32f4xx.c \
 stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_spi.c \
 stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_dma.c \
+stm/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_tim.c \
 
 # ASM sources
 ASM_SOURCES =  \

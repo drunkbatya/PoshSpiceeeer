@@ -8,7 +8,7 @@
 
 App* app_alloc(void) {
     App* app = malloc(sizeof(App));
-    app->display = display_alloc(SPI2, GPIOB, LL_GPIO_PIN_13);
+    app->display = display_alloc(SPI2, GPIOB, LL_GPIO_PIN_13, TIM1, GPIOA, LL_GPIO_PIN_7);
     app->input = input_alloc(GPIOA, GPIOA, GPIOA, LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2);
     app->scene_manager = scene_manager_alloc(&scene_handlers, app);
     app->animation = animation_alloc();

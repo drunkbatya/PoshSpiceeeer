@@ -1,6 +1,7 @@
 #pragma once
 #include <stm32f4xx_ll_gpio.h>
 #include <stm32f4xx_ll_spi.h>
+#include "pwm.h"
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -15,9 +16,10 @@ typedef struct {
     uint8_t* frame_buffer;
     DisplayDrawCallback draw_callback;
     void* context;
+    Pwm* pwm;
 } Display;
 
-Display* display_alloc(SPI_TypeDef* SPI, GPIO_TypeDef* reset_pin_port, uint32_t reset_pin);
+Display* display_alloc(SPI_TypeDef* SPI, GPIO_TypeDef* reset_pin_port, uint32_t reset_pin, TIM_TypeDef* timer, GPIO_TypeDef* timer_pin_port, uint32_t timer_pin);
 void display_init(Display* display);
 void display_draw_frame(Display* display, const uint8_t* frame, uint16_t frame_size);
 void display_sync_framebuffer(Display* display);
