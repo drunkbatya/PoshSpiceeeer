@@ -1,6 +1,7 @@
 #pragma once
 #include <stm32f4xx_ll_gpio.h>
 #include <stm32f4xx_ll_spi.h>
+#include "icon.h"
 #include "pwm.h"
 
 #define SCREEN_WIDTH 128
@@ -19,9 +20,15 @@ typedef struct {
     Pwm* pwm;
 } Display;
 
-Display* display_alloc(SPI_TypeDef* SPI, GPIO_TypeDef* reset_pin_port, uint32_t reset_pin, TIM_TypeDef* timer, GPIO_TypeDef* timer_pin_port, uint32_t timer_pin);
+Display* display_alloc(
+    SPI_TypeDef* SPI,
+    GPIO_TypeDef* reset_pin_port,
+    uint32_t reset_pin,
+    TIM_TypeDef* timer,
+    GPIO_TypeDef* timer_pin_port,
+    uint32_t timer_pin);
 void display_init(Display* display);
-void display_draw_frame(Display* display, const uint8_t* frame, uint16_t frame_size);
+void display_draw_icon(Display* display, const Icon* icon);
 void display_sync_framebuffer(Display* display);
 void display_free(Display* display);
 void display_set_draw_callback(Display* display, DisplayDrawCallback draw_callback, void* context);
@@ -30,3 +37,12 @@ void display_execute_draw_callback(Display* display);
 void display_clear_framebuffer(Display* display);
 void display_clear(Display* display);
 void display_draw_pixel(Display* display, uint8_t x, uint8_t y);
+void display_set_brightness(Display* display, int16_t bright);
+uint8_t display_get_brightness(Display* display);
+void display_draw_icon_animation(Display* display, const Icon* icon, uint8_t current_frame);
+void display_draw_icon_animation_x(
+    Display* display,
+    const Icon* icon,
+    uint8_t x,
+    uint8_t y,
+    uint8_t current_frame);

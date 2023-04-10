@@ -22,7 +22,7 @@ void app_run(App* app) {
     while(true) {
         display_execute_draw_callback(app->display);
         display_sync_framebuffer(app->display);
-        // LL_mDelay(150);
+        LL_mDelay(150);
         if(input_recive_new_event(app->input)) {
             scene_manager_send_event_to_scene(app->scene_manager, input_get_event(app->input));
         }

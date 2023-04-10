@@ -49,8 +49,8 @@ Pwm* pwm_init_alloc(TIM_TypeDef* timer, GPIO_TypeDef* timer_pin_port, uint32_t t
     pwm->timer = timer;
     pwm->timer_pin_port = timer_pin_port;
     pwm->timer_pin = timer_pin;
-    pwm->freq = 1000;
-    pwm->duty = 50;
+    pwm->freq = 10000;
+    pwm->duty = 1;
     pwm_init(pwm);
     return pwm;
 }
@@ -68,4 +68,8 @@ static void pwm_deinit(Pwm* pwm) {
 void pwm_free(Pwm* pwm) {
     pwm_deinit(pwm);
     free(pwm);
+}
+
+uint8_t pwm_get_duty(Pwm* pwm) {
+    return pwm->duty;
 }

@@ -41,11 +41,10 @@ src/display.c \
 src/scene_manager.c \
 src/animation.c \
 src/input.c \
+src/icon.c \
 src/pwm.c \
 src/scenes/app_scene.c \
 src/scenes/app_scene_start.c \
-src/scenes/app_scene_test.c \
-src/scenes/app_scene_test_two.c \
 img/out/assets_icons.c \
 lib/fonts/haxrcorp4089.c \
 lib/lcd-st7920/st7920.c \
@@ -176,7 +175,10 @@ vpath %.c $(sort $(dir $(C_SOURCES)))
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
-$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
+images:
+	python3 scripts/icon_convert.py img/ src/
+
+$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) images
 	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
@@ -200,7 +202,9 @@ $(BUILD_DIR):
 #######################################
 clean:
 	-rm -fR $(BUILD_DIR)
-  
+	-rm -f src/icon_assets.c
+	-rm -f src/icon_assets.h
+
 .PHONY: flash
 flash: all
 	st-flash write build/PoshSpiceeeer.bin 0x8000000
