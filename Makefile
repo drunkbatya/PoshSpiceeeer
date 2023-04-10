@@ -45,6 +45,8 @@ src/icon.c \
 src/pwm.c \
 src/scenes/app_scene.c \
 src/scenes/app_scene_start.c \
+src/scenes/app_scene_first.c \
+src/scenes/app_scene_brightness.c \
 img/out/assets_icons.c \
 lib/fonts/haxrcorp4089.c \
 lib/lcd-st7920/st7920.c \
