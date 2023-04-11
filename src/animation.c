@@ -41,6 +41,7 @@ void animation_toggle_direction(Animation* animation) {
 }
 
 void animation_switch_frame(Animation* animation) {
+    if(animation->icon == NULL) return;
     if(animation->current_frame == 0 && animation->direction == AnimationDirectionBackward) {
         animation_toggle_direction(animation);
     } else if(
