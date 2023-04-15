@@ -84,14 +84,18 @@ void display_draw_char(Display* display, const char c, uint8_t x, uint8_t y) {
 }
 
 void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y) {
+    uint8_t new_x = x;
     while(*str) {
         if(*str == '\n') {
+            new_x = x;
+            y += 10;
+            str++;
             continue;
         }
         const Icon* glyph = FontHaxrcorp4089[*str - 32];
         uint8_t glyph_width = icon_get_width(glyph);
-        display_draw_icon(display, glyph, x, y);
-        x += glyph_width + 1;
+        display_draw_icon(display, glyph, new_x, y);
+        new_x += glyph_width + 1;
         str++;
     }
 }
