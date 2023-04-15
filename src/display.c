@@ -79,8 +79,21 @@ void display_draw_icon_animation(
     display_draw_xbm(display, icon_data[current_frame], x, y, icon_width, icon_height);
 }
 
-void display_draw_char(Display* display, char c, uint8_t x, uint8_t y) {
-    display_draw_icon(display, Font[c - 33], x, y);
+void display_draw_char(Display* display, const char c, uint8_t x, uint8_t y) {
+    display_draw_icon(display, FontHaxrcorp4089[c - 32], x, y);
+}
+
+void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y) {
+    while(*str) {
+        if(*str == '\n') {
+            continue;
+        }
+        const Icon* glyph = FontHaxrcorp4089[*str - 32];
+        uint8_t glyph_width = icon_get_width(glyph);
+        display_draw_icon(display, glyph, x, y);
+        x += glyph_width + 1;
+        str++;
+    }
 }
 
 void display_sync_framebuffer(Display* display) {

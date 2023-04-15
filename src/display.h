@@ -50,4 +50,5 @@ void display_draw_icon_animation(
     uint8_t y,
     uint8_t current_frame);
 void display_draw_icon(Display* display, const Icon* icon, uint8_t x, uint8_t y);
-void display_draw_char(Display* display, char c, uint8_t x, uint8_t y);
+void display_draw_char(Display* display, const char c, uint8_t x, uint8_t y);
+void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y);
