@@ -2,6 +2,7 @@
 #include <string.h>
 #include "st7920.h"
 #include "display.h"
+#include "assets_icons.h"
 
 Display* display_alloc(
     SPI_TypeDef* SPI,
@@ -76,6 +77,10 @@ void display_draw_icon_animation(
     uint8_t icon_height = icon_get_height(icon);
     const uint8_t* const* icon_data = icon_get_data(icon);
     display_draw_xbm(display, icon_data[current_frame], x, y, icon_width, icon_height);
+}
+
+void display_draw_char(Display* display, char c, uint8_t x, uint8_t y) {
+    display_draw_icon(display, Font[c - 33], x, y);
 }
 
 void display_sync_framebuffer(Display* display) {

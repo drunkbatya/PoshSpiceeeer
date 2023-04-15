@@ -179,7 +179,7 @@ vpath %.s $(sort $(dir $(ASM_SOURCES)))
 images:
 	python3 scripts/icon_convert.py img/ src/
 
-$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) images
+$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)

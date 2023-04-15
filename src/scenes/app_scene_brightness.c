@@ -8,6 +8,11 @@
 void app_scene_brightness_on_enter(void* context) {
     App* app = context;
     display_draw_icon(app->display, &I_ButtonLeft_4x7, 3, 0);
+    display_draw_char(app->display, '!', 20, 0);
+    display_draw_char(app->display, '"', 22, 0);
+    display_draw_char(app->display, '#', 28, 0);
+    display_draw_char(app->display, '$', 34, 0);
+    display_draw_char(app->display, '%', 40, 0);
 }
 
 void app_scene_brightness_on_event(void* context, InputEvent event) {
