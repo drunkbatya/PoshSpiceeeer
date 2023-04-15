@@ -4,6 +4,8 @@
 Animation* animation_alloc(void) {
     Animation* animation = malloc(sizeof(Animation));
     animation->icon = NULL;
+    animation->x = 0;
+    animation->y = 0;
     animation->current_frame = 0;
     animation->direction = AnimationDirectionForward;
     return animation;
@@ -18,18 +20,28 @@ uint8_t animation_get_current_frame(Animation* animation) {
 }
 
 void animation_draw_current_frame(Animation* animation, Display* display) {
-    display_draw_icon_animation(display, animation->icon, animation->current_frame);
+    display_draw_icon_animation(
+        display, animation->icon, animation->x, animation->y, animation->current_frame);
 }
 
-void animation_set_animation(Animation* animation, const Icon* icon, bool reverse_cycle) {
+void animation_set_animation(
+    Animation* animation,
+    const Icon* icon,
+    uint8_t x,
+    uint8_t y,
+    bool reverse_cycle) {
     animation->icon = icon;
     animation->current_frame = 0;
     animation->reverse_cycle = reverse_cycle;
+    animation->x = x;
+    animation->y = y;
 }
 
 void animation_reset_animation(Animation* animation) {
     animation->icon = NULL;
     animation->current_frame = 0;
+    animation->x = 0;
+    animation->y = 0;
     animation->direction = AnimationDirectionForward;
 }
 

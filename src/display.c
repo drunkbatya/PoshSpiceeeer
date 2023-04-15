@@ -38,43 +38,44 @@ void display_draw_pixel(Display* display, uint8_t x, uint8_t y) {
     display->frame_buffer[slash_x + (y * (SCREEN_WIDTH / 8))] |= (1 << percent_x);
 }
 
-void display_draw_icon_animation_x(
+void display_draw_xbm(
+    Display* display,
+    const uint8_t* data,
+    uint8_t x,
+    uint8_t y,
+    uint8_t width,
+    uint8_t height) {
+    data++;
+    if(width % 8 != 0) {
+        width = ((width / 8) + 1) * 8;
+    }
+    for(int i = 0; i < width * height / 8; i++) {
+        uint8_t byte_column = *(data + i);
+        for(uint8_t bit = 0; bit < 8; bit++) {
+            uint8_t target_x = (((8 * i) + bit) % width) + x;
+            uint8_t target_y = ((8 * i) / (width)) + y;
+            if((byte_column >> bit) & 0x01) display_draw_pixel(display, target_x, target_y);
+        }
+    }
+}
+
+void display_draw_icon(Display* display, const Icon* icon, uint8_t x, uint8_t y) {
+    uint8_t icon_width = icon_get_width(icon);
+    uint8_t icon_height = icon_get_height(icon);
+    const uint8_t* const* icon_data = icon_get_data(icon);
+    display_draw_xbm(display, icon_data[0], x, y, icon_width, icon_height);
+}
+
+void display_draw_icon_animation(
     Display* display,
     const Icon* icon,
     uint8_t x,
     uint8_t y,
     uint8_t current_frame) {
-    const uint8_t* data = icon_get_data(icon)[current_frame];
-    for(uint8_t frame_y = 0; frame_y < icon_get_height(icon); frame_y++) {
-        for(uint8_t frame_x = 0; frame_x < icon_get_width(icon); frame_x += 8) {
-            uint8_t bit_data = data[(frame_y * icon_get_height(icon) + frame_x)];
-            for(uint8_t bit = 0; bit < 8; bit++) {
-                if((bit_data << bit) & 0x01) display_draw_pixel(display, x + frame_x + bit, y);
-            }
-        }
-        y++;
-    }
-}
-
-void display_draw_icon_animation(Display* display, const Icon* icon, uint8_t current_frame) {
-    memcpy(
-        display->frame_buffer,
-        icon_get_data(icon)[current_frame],
-        (icon_get_width(icon) * icon_get_height(icon) / 8));
-}
-
-void display_draw_icon(Display* display, const Icon* icon) {
-    memcpy(
-        display->frame_buffer, icon_get_data(icon), icon_get_width(icon) * icon_get_height(icon));
-}
-
-void displat_draw_icon(
-    Display* display,
-    const uint8_t* icon,
-    uint8_t x,
-    uint8_t y,
-    uint8_t width,
-    uint8_t height) {
+    uint8_t icon_width = icon_get_width(icon);
+    uint8_t icon_height = icon_get_height(icon);
+    const uint8_t* const* icon_data = icon_get_data(icon);
+    display_draw_xbm(display, icon_data[current_frame], x, y, icon_width, icon_height);
 }
 
 void display_sync_framebuffer(Display* display) {

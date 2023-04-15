@@ -48,7 +48,6 @@ src/scenes/app_scene_start.c \
 src/scenes/app_scene_first.c \
 src/scenes/app_scene_brightness.c \
 img/out/assets_icons.c \
-lib/fonts/haxrcorp4089.c \
 lib/lcd-st7920/st7920.c \
 stm/Core/Src/main.c \
 stm/Core/Src/stm32f4xx_it.c \

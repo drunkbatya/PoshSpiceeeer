@@ -8,6 +8,7 @@
 
 static void app_scene_start_draw_callback(void* context) {
     App* app = context;
+    display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
     animation_switch_frame(app->animation); // TODO: timer
     LL_mDelay(300);
@@ -17,7 +18,7 @@ void app_scene_start_on_enter(void* context) {
     App* app = context;
     // display_draw_image(app->display, _I_ButtonLeft_4x7_0, 8);
     //display_draw_pixel(app->display, 1, 15);
-    animation_set_animation(app->animation, &A_L1_First_128x64, true);
+    animation_set_animation(app->animation, &A_L1_First_128x64, 0, 0, true);
     display_set_draw_callback(app->display, app_scene_start_draw_callback, app);
 }
 
