@@ -92,7 +92,7 @@ uint8_t display_get_string_width(Display* display, const char* str) {
     UNUSED(display);
     uint8_t string_width = 0;
     while(*str) {
-        string_width += icon_get_width(FontHaxrcorp4089[*str - 32]) + 1;
+        string_width += icon_get_width(F_Haxrcorp_4089[*str - 32]) + 1;
         str++;
     }
     return string_width;
@@ -137,14 +137,12 @@ void display_draw_button_left(Display* display, const char* str) {
     const uint8_t x = 1;
     const uint8_t y = SCREEN_HEIGHT;
 
-    display_draw_filled_rectangle(
-        display, x, y - button_height, button_width, button_height - 1);
+    display_draw_filled_rectangle(display, x, y - button_height, button_width, button_height - 1);
 
     display_invert_color(display);
     display_draw_string(
         display, str, x + horizontal_offset + icon_width_with_offset, y - vertical_offset - 10);
-    display_draw_icon(
-        display, icon, x + horizontal_offset, y - icon_v_offset);
+    display_draw_icon(display, icon, x + horizontal_offset, y - icon_v_offset);
     display_invert_color(display);
 }
 
@@ -189,7 +187,7 @@ void display_draw_icon_animation(
 }
 
 void display_draw_char(Display* display, const char c, uint8_t x, uint8_t y) {
-    display_draw_icon(display, FontHaxrcorp4089[c - 32], x, y);
+    display_draw_icon(display, F_Haxrcorp_4089[c - 32], x, y);
 }
 
 void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y) {
@@ -201,7 +199,7 @@ void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y
             str++;
             continue;
         }
-        const Icon* glyph = FontHaxrcorp4089[*str - 32];
+        const Icon* glyph = F_Haxrcorp_4089[*str - 32];
         uint8_t glyph_width = icon_get_width(glyph);
         display_draw_icon(display, glyph, new_x, y);
         new_x += glyph_width + 1;

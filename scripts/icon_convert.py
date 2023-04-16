@@ -23,6 +23,9 @@ ICONS_TEMPLATE_C_FRAME = "const uint8_t {name}[] = {data};\n"
 ICONS_TEMPLATE_C_DATA = "const uint8_t* const {name}[] = {data};\n"
 ICONS_TEMPLATE_C_ICONS = "const Icon {name} = {{.width={width},.height={height},.frame_count={frame_count},.frame_rate={frame_rate},.frames=_{name}}};\n"
 
+ICONS_TEMPLATE_H_FONT_NAME = "extern const Icon* {name}[];"
+ICONS_TEMPLATE_FONT_C_DATA = "const Icon* {name}[] = {data};"
+
 
 class CImage:
     def __init__(self, width: int, height: int, data: bytes):
@@ -86,6 +89,8 @@ def icons(args):
     )
     icons_c.write(ICONS_TEMPLATE_C_HEADER.format(assets_filename=args.filename))
     icons = []
+    font_icons = []
+    fonts = []
     # Traverse icons tree, append image data to source file
     for dirpath, dirnames, filenames in os.walk(args.input_directory):
         print(f"ICON: Processing directory {dirpath}")
@@ -128,6 +133,34 @@ def icons(args):
             )
             icons_c.write("\n")
             icons.append((icon_name, width, height, frame_rate, frame_count))
+        elif "font" in filenames:
+            print(f"ICON: Folder contains font")
+            font_name = "F_" + os.path.split(dirpath)[1].replace("-", "_")
+            fonts.append(font_name)
+            glyph_names = []
+            filenames.remove("font")
+            for filename in sorted(
+                filenames, key=lambda current: int(current.split(".png")[0])
+            ):
+                fullfilename = os.path.join(dirpath, filename)
+                if not _iconIsSupported(filename):
+                    continue
+                glyph_code = filename.split(".png")[0]
+                glyph_name = f"{font_name}_{glyph_code}"
+                print(f"ICON: Processing font glyph {filename}")
+                fullfilename = os.path.join(dirpath, filename)
+                width, height, data = _icon2header(fullfilename)
+                icons_c.write(
+                    ICONS_TEMPLATE_C_FRAME.format(name=f"_{glyph_name}_0", data=data)
+                )
+                icons_c.write(
+                    ICONS_TEMPLATE_C_DATA.format(
+                        name=f"_{glyph_name}", data=f"{{_{glyph_name}_0}}"
+                    )
+                )
+                icons_c.write("\n")
+                font_icons.append((glyph_name, width, height, 0, 1))
+                glyph_names.append(f"&_{glyph_name}")
         else:
             # process icons
             for filename in filenames:
@@ -158,6 +191,24 @@ def icons(args):
                 frame_count=frame_count,
             )
         )
+    font_names = []
+    for name, width, height, frame_rate, frame_count in font_icons:
+        icons_c.write(
+            ICONS_TEMPLATE_C_ICONS.format(
+                name=name,
+                width=width,
+                height=height,
+                frame_rate=frame_rate,
+                frame_count=frame_count,
+            )
+        )
+        font_names.append(f"&{name}")
+    icons_c.write(
+        ICONS_TEMPLATE_FONT_C_DATA.format(
+            name=f"{font_name}", data=f'{{{",".join(font_names)}}}'
+        )
+    )
+
     icons_c.write("\n")
     icons_c.close()
 
@@ -171,6 +222,8 @@ def icons(args):
     icons_h.write(ICONS_TEMPLATE_H_HEADER)
     for name, width, height, frame_rate, frame_count in icons:
         icons_h.write(ICONS_TEMPLATE_H_ICON_NAME.format(name=name))
+    for name in fonts:
+        icons_h.write(ICONS_TEMPLATE_H_FONT_NAME.format(name=name))
     icons_h.close()
     print(f"ICON: Done")
     return 0
