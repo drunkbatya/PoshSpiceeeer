@@ -12,6 +12,18 @@ const uint8_t _I_ButtonLeft_4x7_0[] = {
 };
 const uint8_t* const _I_ButtonLeft_4x7[] = {_I_ButtonLeft_4x7_0};
 
+const uint8_t _I_ButtonRight_4x7_0[] = {
+    0x00,
+    0x01,
+    0x03,
+    0x07,
+    0x0f,
+    0x07,
+    0x03,
+    0x01,
+};
+const uint8_t* const _I_ButtonRight_4x7[] = {_I_ButtonRight_4x7_0};
+
 const uint8_t _I_Test_4x7_0[] = {
     0x00,
     0x01,
@@ -4361,6 +4373,8 @@ const uint8_t* const _I_frame_99[] = {_I_frame_99_0};
 
 const Icon I_ButtonLeft_4x7 =
     {.width = 4, .height = 7, .frame_count = 1, .frame_rate = 0, .frames = _I_ButtonLeft_4x7};
+const Icon I_ButtonRight_4x7 =
+    {.width = 4, .height = 7, .frame_count = 1, .frame_rate = 0, .frames = _I_ButtonRight_4x7};
 const Icon I_Test_4x7 =
     {.width = 9, .height = 7, .frame_count = 1, .frame_rate = 0, .frames = _I_Test_4x7};
 const Icon A_L1_First_128x64 =
@@ -4563,7 +4577,6 @@ const Icon I_frame_98 =
     {.width = 4, .height = 10, .frame_count = 1, .frame_rate = 0, .frames = _I_frame_98};
 const Icon I_frame_99 =
     {.width = 4, .height = 10, .frame_count = 1, .frame_rate = 0, .frames = _I_frame_99};
-
 const Icon* FontHaxrcorp4089[] = {
     &I_frame_32,  &I_frame_33,  &I_frame_34,  &I_frame_35,  &I_frame_36,  &I_frame_37,
     &I_frame_38,  &I_frame_39,  &I_frame_40,  &I_frame_41,  &I_frame_42,  &I_frame_43,

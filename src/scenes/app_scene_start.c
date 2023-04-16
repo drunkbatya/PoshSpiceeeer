@@ -10,6 +10,7 @@ static void app_scene_start_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
+    display_draw_button_right(app->display, "Next");
     animation_switch_frame(app->animation); // TODO: timer
     LL_mDelay(300);
 }
