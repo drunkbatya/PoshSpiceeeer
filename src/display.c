@@ -32,7 +32,7 @@ void display_init(Display* display) {
     st7920_init();
     st7920_graphic_mode(true);
     display_clear_framebuffer(display);
-    display_set_brightness(display, 255);
+    display_set_brightness(display, 190);
 }
 
 void display_set_color(Display* display, DisplayColor color) {
@@ -120,6 +120,31 @@ void display_draw_button_right(Display* display, const char* str) {
         display, str, x - button_width + horizontal_offset, y - vertical_offset - 10);
     display_draw_icon(
         display, icon, x - horizontal_offset - icon_get_width(icon), y - icon_v_offset);
+    display_invert_color(display);
+}
+
+void display_draw_button_left(Display* display, const char* str) {
+    const uint8_t button_height = 12;
+    const uint8_t vertical_offset = 1;
+    const uint8_t horizontal_offset = 2;
+    const uint8_t string_width = display_get_string_width(display, str);
+    const Icon* icon = &I_ButtonLeft_4x7;
+    const uint8_t icon_h_offset = 3;
+    const uint8_t icon_width_with_offset = icon_get_width(icon) + icon_h_offset;
+    const uint8_t icon_v_offset = icon_get_height(icon) + vertical_offset + 2;
+    const uint8_t button_width = string_width + horizontal_offset * 2 + icon_width_with_offset;
+
+    const uint8_t x = 1;
+    const uint8_t y = SCREEN_HEIGHT;
+
+    display_draw_filled_rectangle(
+        display, x, y - button_height, button_width, button_height - 1);
+
+    display_invert_color(display);
+    display_draw_string(
+        display, str, x + horizontal_offset + icon_width_with_offset, y - vertical_offset - 10);
+    display_draw_icon(
+        display, icon, x + horizontal_offset, y - icon_v_offset);
     display_invert_color(display);
 }
 

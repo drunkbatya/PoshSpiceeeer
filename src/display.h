@@ -58,3 +58,4 @@ void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y
 void display_set_color(Display* display, DisplayColor color);
 void display_invert_color(Display* display);
 void display_draw_button_right(Display* display, const char* str);
+void display_draw_button_left(Display* display, const char* str);

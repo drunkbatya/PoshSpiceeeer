@@ -18,6 +18,7 @@ void app_scene_brightness_on_enter(void* context) {
 
     display_draw_string(app->display, "I'm trying to print string", 0, 11);
     display_draw_string(app->display, "I CAN PRINT ALL LATTERS\nTest!@", 0, 22);
+    display_draw_button_left(app->display, "Back");
     // display_draw_string(app->display, "A", 60, 0);
 }
 
