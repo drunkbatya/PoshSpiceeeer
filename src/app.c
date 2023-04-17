@@ -20,6 +20,7 @@ void app_run(App* app) {
     display_clear(app->display);
     scene_manager_next_scene(app->scene_manager, SceneStart);
     while(true) {
+        animation_timer_process(app->animation);
         display_execute_draw_callback(app->display);
         display_sync_framebuffer(app->display);
         if(input_recive_new_event(app->input)) {

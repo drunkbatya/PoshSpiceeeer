@@ -32,7 +32,7 @@ void display_init(Display* display) {
     st7920_init();
     st7920_graphic_mode(true);
     display_clear_framebuffer(display);
-    display_set_brightness(display, 190);
+    display_set_brightness(display, 255);
 }
 
 void display_set_color(Display* display, DisplayColor color) {
@@ -237,8 +237,8 @@ void display_clear(Display* display) {
     display_sync_framebuffer(display);
 }
 
-void display_set_brightness(Display* display, int16_t bright) {
-    if(bright < 0) bright = 0;
+void display_set_brightness(Display* display, uint8_t bright) {
+    if(bright < 155) bright = 155;
     if(bright > 254) bright = 254;
     pwm_set_params(display->pwm, 10000, 255 - bright);
 }

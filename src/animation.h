@@ -16,6 +16,7 @@ typedef struct {
     uint8_t current_frame;
     bool reverse_cycle;
     AnimationDirection direction;
+    uint32_t timer_compare_value;
 } Animation;
 
 Animation* animation_alloc(void);
@@ -28,5 +29,4 @@ void animation_set_animation(
     uint8_t y,
     bool reverse_cycle);
 void animation_reset_animation(Animation* animation);
-void animation_switch_frame(Animation* animation);
-uint8_t animation_get_frame_size(Animation* animation);
+void animation_timer_process(Animation* animation);

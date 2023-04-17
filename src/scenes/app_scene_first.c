@@ -12,8 +12,6 @@ static void app_scene_first_draw_callback(void* context) {
     animation_draw_current_frame(app->animation, app->display);
     display_draw_button_left(app->display, "Back");
     display_draw_button_right(app->display, "Next");
-    animation_switch_frame(app->animation); // TODO: timer
-    LL_mDelay(300);
 }
 
 void app_scene_first_on_enter(void* context) {

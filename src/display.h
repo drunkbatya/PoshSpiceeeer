@@ -44,7 +44,7 @@ void display_execute_draw_callback(Display* display);
 void display_clear_framebuffer(Display* display);
 void display_clear(Display* display);
 void display_draw_pixel(Display* display, uint8_t x, uint8_t y);
-void display_set_brightness(Display* display, int16_t bright);
+void display_set_brightness(Display* display, uint8_t bright);
 uint8_t display_get_brightness(Display* display);
 void display_draw_icon_animation(
     Display* display,

@@ -4392,9 +4392,9 @@ const Icon I_ButtonRight_4x7 =
 const Icon I_Test_4x7 =
     {.width = 9, .height = 7, .frame_count = 1, .frame_rate = 0, .frames = _I_Test_4x7};
 const Icon A_L1_First_128x64 =
-    {.width = 128, .height = 64, .frame_count = 4, .frame_rate = 2, .frames = _A_L1_First_128x64};
+    {.width = 128, .height = 64, .frame_count = 4, .frame_rate = 1, .frames = _A_L1_First_128x64};
 const Icon A_L1_Second_128x64 =
-    {.width = 128, .height = 64, .frame_count = 3, .frame_rate = 2, .frames = _A_L1_Second_128x64};
+    {.width = 128, .height = 64, .frame_count = 3, .frame_rate = 1, .frames = _A_L1_Second_128x64};
 const Icon A_L1_Senpai_128x64 = {
     .width = 128,
     .height = 64,

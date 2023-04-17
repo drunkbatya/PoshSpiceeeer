@@ -1,5 +1,27 @@
 #include <stdlib.h>
+#include <stm32f4xx_ll_bus.h>
 #include "animation.h"
+
+static void animation_timer_stop(Animation* animation) {
+    LL_TIM_DeInit(TIM3);
+    animation->timer_compare_value = 0;
+}
+
+static void animation_timer_setup(Animation* animation) {
+    LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_TIM3);
+    LL_TIM_SetCounterMode(TIM3, LL_TIM_COUNTERMODE_UP);
+    LL_TIM_SetRepetitionCounter(TIM3, 0);
+    LL_TIM_SetClockDivision(TIM3, LL_TIM_CLOCKDIVISION_DIV1);
+    LL_TIM_SetClockSource(TIM3, LL_TIM_CLOCKSOURCE_INTERNAL);
+    LL_TIM_EnableARRPreload(TIM3);
+    uint32_t freq_div = 64000000LU / icon_get_frame_rate(animation->icon) * 2;
+    uint32_t prescaler = freq_div / 0x10000LU;
+    uint32_t period = freq_div / (prescaler + 1);
+    animation->timer_compare_value = period * 50 / 100;
+    LL_TIM_SetPrescaler(TIM3, prescaler);
+    LL_TIM_SetAutoReload(TIM3, 65535);
+    LL_TIM_EnableCounter(TIM3);
+}
 
 Animation* animation_alloc(void) {
     Animation* animation = malloc(sizeof(Animation));
@@ -8,10 +30,12 @@ Animation* animation_alloc(void) {
     animation->y = 0;
     animation->current_frame = 0;
     animation->direction = AnimationDirectionForward;
+    animation->timer_compare_value = 0;
     return animation;
 }
 
 void animation_free(Animation* animation) {
+    animation_timer_stop(animation);
     free(animation);
 }
 
@@ -35,6 +59,7 @@ void animation_set_animation(
     animation->reverse_cycle = reverse_cycle;
     animation->x = x;
     animation->y = y;
+    animation_timer_setup(animation);
 }
 
 void animation_reset_animation(Animation* animation) {
@@ -43,16 +68,17 @@ void animation_reset_animation(Animation* animation) {
     animation->x = 0;
     animation->y = 0;
     animation->direction = AnimationDirectionForward;
+    animation_timer_stop(animation);
 }
 
-void animation_toggle_direction(Animation* animation) {
+static void animation_toggle_direction(Animation* animation) {
     if(animation->direction == AnimationDirectionForward)
         animation->direction = AnimationDirectionBackward;
     else
         animation->direction = AnimationDirectionForward;
 }
 
-void animation_switch_frame(Animation* animation) {
+static void animation_switch_frame(Animation* animation) {
     if(animation->icon == NULL) return;
     if(animation->current_frame == 0 && animation->direction == AnimationDirectionBackward) {
         animation_toggle_direction(animation);
@@ -70,5 +96,13 @@ void animation_switch_frame(Animation* animation) {
         animation->current_frame++;
     } else if(animation->direction == AnimationDirectionBackward) {
         animation->current_frame--;
+    }
+}
+
+void animation_timer_process(Animation* animation) {
+    if(animation->icon == NULL) return;
+    if(LL_TIM_GetCounter(TIM3) > animation->timer_compare_value) {
+        animation_switch_frame(animation);
+        LL_TIM_SetCounter(TIM3, 0);
     }
 }
