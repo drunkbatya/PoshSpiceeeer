@@ -45,8 +45,7 @@ src/icon.c \
 src/pwm.c \
 src/scenes/app_scene.c \
 src/scenes/app_scene_start.c \
-src/scenes/app_scene_first.c \
-src/scenes/app_scene_brightness.c \
+src/scenes/app_scene_cookie.c \
 img/out/assets_icons.c \
 lib/lcd-st7920/st7920.c \
 stm/Core/Src/main.c \
@@ -148,7 +147,7 @@ endif
 
 
 # Generate dependency information
-CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
+CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)" -Wall -Werror
 
 
 #######################################

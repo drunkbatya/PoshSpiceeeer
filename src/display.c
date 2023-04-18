@@ -35,7 +35,7 @@ void display_init(Display* display) {
     display_set_brightness(display, 255);
 }
 
-void display_set_color(Display* display, DisplayColor color) {
+void display_set_color(Display* display, DisplayDrawColor color) {
     display->color = color;
 }
 

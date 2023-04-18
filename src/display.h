@@ -10,8 +10,6 @@
 
 typedef void (*DisplayDrawCallback)(void* context);
 
-typedef enum { DisplayColorWhite = 0x00, DisplayColorBlack = 0x01 } DisplayColor;
-
 typedef enum {
     DisplayDrawColorWhite = 0x00,
     DisplayDrawColorBlack = 0x01,
@@ -55,7 +53,7 @@ void display_draw_icon_animation(
 void display_draw_icon(Display* display, const Icon* icon, uint8_t x, uint8_t y);
 void display_draw_char(Display* display, const char c, uint8_t x, uint8_t y);
 void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y);
-void display_set_color(Display* display, DisplayColor color);
+void display_set_color(Display* display, DisplayDrawColor color);
 void display_invert_color(Display* display);
 void display_draw_button_right(Display* display, const char* str);
 void display_draw_button_left(Display* display, const char* str);

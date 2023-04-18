@@ -17,14 +17,14 @@ void app_scene_start_on_enter(void* context) {
     App* app = context;
     // display_draw_image(app->display, _I_ButtonLeft_4x7_0, 8);
     //display_draw_pixel(app->display, 1, 15);
-    animation_set_animation(app->animation, &A_L1_First_128x64, 0, 0, true);
+    animation_set_animation(app->animation, &A_Start_128x64, 0, 0, true);
     display_set_draw_callback(app->display, app_scene_start_draw_callback, app);
 }
 
 void app_scene_start_on_event(void* context, InputEvent event) {
     App* app = context;
     if(event == INPUT_EVENT_RIGHT_PRESSED)
-        scene_manager_next_scene(app->scene_manager, SceneFirst);
+        scene_manager_next_scene(app->scene_manager, SceneCookie);
 }
 void app_scene_start_on_exit(void* context) {
     App* app = context;
