@@ -205,8 +205,8 @@ $(BUILD_DIR):
 #######################################
 clean:
 	-rm -fR $(BUILD_DIR)
-	-rm -f src/icon_assets.c
-	-rm -f src/icon_assets.h
+	-rm -f src/assets_icons.c
+	-rm -f src/assets_icons.h
 
 .PHONY: flash
 flash: all
