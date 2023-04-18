@@ -43,10 +43,10 @@ src/animation.c \
 src/input.c \
 src/icon.c \
 src/pwm.c \
+src/assets_icons.c \
 src/scenes/app_scene.c \
 src/scenes/app_scene_start.c \
 src/scenes/app_scene_cookie.c \
-img/out/assets_icons.c \
 lib/lcd-st7920/st7920.c \
 stm/Core/Src/main.c \
 stm/Core/Src/stm32f4xx_it.c \
@@ -147,7 +147,7 @@ endif
 
 
 # Generate dependency information
-CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)" -Wall -Werror
+CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
 
 #######################################
@@ -162,20 +162,23 @@ LIBDIR =
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all
-all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+all: src/assets_icons.c $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
 
 
 #######################################
 # build the application
 #######################################
 # list of objects
+
+IMAGES := $(shell find img/ -type f -iname '*.png' -or -iname 'frame_rate')
+
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
 vpath %.c $(sort $(dir $(C_SOURCES)))
 # list of ASM program objects
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
-images:
+src/assets_icons.c: $(IMAGES) scripts/icon_convert.py
 	python3 scripts/icon_convert.py img/ src/
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)

@@ -2,3 +2,4 @@ build/
 other/
 *.DS_Store
 *.swp
+src/assets_icons.*
