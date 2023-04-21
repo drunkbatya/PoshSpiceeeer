@@ -109,13 +109,15 @@ void display_draw_button_right(Display* display, const char* str) {
     const uint8_t icon_v_offset = icon_get_height(icon) + vertical_offset + 2;
     const uint8_t button_width = string_width + horizontal_offset * 2 + icon_width_with_offset;
 
-    const uint8_t x = SCREEN_WIDTH;
-    const uint8_t y = SCREEN_HEIGHT;
+    const uint8_t x = SCREEN_WIDTH - 1;
+    const uint8_t y = SCREEN_HEIGHT - 1;
 
     display_draw_filled_rectangle(
         display, x - button_width, y - button_height, button_width - 1, button_height - 1);
 
     display_invert_color(display);
+    display_draw_rectangle(
+        display, x - button_width, y - button_height - 1, button_width - 1, button_height);
     display_draw_string(
         display, str, x - button_width + horizontal_offset, y - vertical_offset - 10);
     display_draw_icon(
@@ -135,14 +137,15 @@ void display_draw_button_left(Display* display, const char* str) {
     const uint8_t button_width = string_width + horizontal_offset * 2 + icon_width_with_offset;
 
     const uint8_t x = 1;
-    const uint8_t y = SCREEN_HEIGHT;
+    const uint8_t y = SCREEN_HEIGHT - 1;
 
     display_draw_filled_rectangle(display, x, y - button_height, button_width, button_height - 1);
 
     display_invert_color(display);
+    display_draw_rectangle(display, x, y - button_height - 1, button_width, button_height);
     display_draw_string(
-        display, str, x + horizontal_offset + icon_width_with_offset, y - vertical_offset - 10);
-    display_draw_icon(display, icon, x + horizontal_offset, y - icon_v_offset);
+        display, str, x + horizontal_offset + icon_width_with_offset + 1, y - vertical_offset - 10);
+    display_draw_icon(display, icon, x + horizontal_offset + 1, y - icon_v_offset);
     display_invert_color(display);
 }
 

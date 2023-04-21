@@ -46,6 +46,7 @@ src/pwm.c \
 src/assets_icons.c \
 src/scenes/app_scene.c \
 src/scenes/app_scene_start.c \
+src/scenes/app_scene_stars.c \
 src/scenes/app_scene_cookie.c \
 lib/lcd-st7920/st7920.c \
 stm/Core/Src/main.c \

@@ -105,12 +105,16 @@ def icons(args):
             frame_count = 0
             frame_rate = 0
             frame_names = []
-            for filename in sorted(filenames):
+            frameratefile = os.path.join(dirpath, "frame_rate")
+            frame_rate = int(open(frameratefile, "r").read().strip())
+            filenames.remove("frame_rate")
+            for filename in sorted(
+                filenames,
+                key=lambda current: int(current.split("frame_")[1].split(".png")[0]),
+            ):
+                print(filename)
                 fullfilename = os.path.join(dirpath, filename)
-                if filename == "frame_rate":
-                    frame_rate = int(open(fullfilename, "r").read().strip())
-                    continue
-                elif not _iconIsSupported(filename):
+                if not _iconIsSupported(filename):
                     continue
                 print(f"ICON: Processing animation frame {filename}")
                 temp_width, temp_height, data = _icon2header(fullfilename)
