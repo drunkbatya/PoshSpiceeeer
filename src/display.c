@@ -52,6 +52,15 @@ void display_draw_pixel(Display* display, uint8_t x, uint8_t y) {
         display->frame_buffer[slash_x + (y * (SCREEN_WIDTH / 8))] &= ~(1 << percent_x);
 }
 
+void display_clear_pixel(Display* display, uint8_t x, uint8_t y) {
+    uint8_t slash_x = (x / 8);
+    uint8_t percent_x = (x % 8);
+    if((display->color) == DisplayDrawColorBlack)
+        display->frame_buffer[slash_x + (y * (SCREEN_WIDTH / 8))] |= (1 << percent_x);
+    else if((display->color) == DisplayDrawColorWhite)
+        display->frame_buffer[slash_x + (y * (SCREEN_WIDTH / 8))] &= ~(1 << percent_x);
+}
+
 void display_draw_line_straight(
     Display* display,
     uint8_t x_start,
@@ -92,7 +101,7 @@ uint8_t display_get_string_width(Display* display, const char* str) {
     UNUSED(display);
     uint8_t string_width = 0;
     while(*str) {
-        string_width += icon_get_width(F_Haxrcorp_4089[*str - 32]) + 1;
+        if(*str != '\n') string_width += icon_get_width(F_Haxrcorp_4089[*str - 32]) + 1;
         str++;
     }
     return string_width;
@@ -203,8 +212,7 @@ void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y
             str++;
             continue;
         }
-        uint8_t char_width = display_draw_char(display, *str, new_x, y);
-        new_x += char_width + 1;
+        new_x += display_draw_char(display, *str, new_x, y) + 1;
         str++;
     }
 }
@@ -225,8 +233,7 @@ void display_draw_string_animation(
             continue;
         }
         if((max_char == 0) || ((new_str_ptr - str) > max_char - 1)) return;
-        uint8_t char_width = display_draw_char(display, *new_str_ptr, new_x, y);
-        new_x += char_width + 1;
+        new_x += display_draw_char(display, *new_str_ptr, new_x, y) + 1;
         new_str_ptr++;
     }
 }
