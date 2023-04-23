@@ -19,7 +19,8 @@ static void app_scene_start_draw_callback(void* context) {
 void app_scene_start_on_enter(void* context) {
     App* app = context;
     animation_set_animation(app->animation, &A_Start_128x64, 0, 0, true);
-    string_animation_set_string(app->string_animation, "Test", 10, 54, 2);
+    string_animation_set_string(
+        app->string_animation, "In that day\nthe most beautifull\ngirl were born!", 2, 34, 10);
     display_set_draw_callback(app->display, app_scene_start_draw_callback, app);
 }
 
@@ -31,6 +32,7 @@ void app_scene_start_on_event(void* context, InputEvent event) {
 }
 void app_scene_start_on_exit(void* context) {
     App* app = context;
+    string_animation_reset(app->string_animation);
     animation_reset_animation(app->animation);
     display_reset_draw_callback(app->display);
     display_clear_framebuffer(app->display);

@@ -21,5 +21,5 @@ void string_animation_set_string(
     uint8_t x,
     uint8_t y,
     uint8_t freq);
-void string_animation_reset_string_animation(StringAnimation* string_animation);
+void string_animation_reset(StringAnimation* string_animation);
 void string_animation_timer_process(StringAnimation* string_animation);

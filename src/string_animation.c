@@ -67,7 +67,7 @@ void string_animation_set_string(
     string_animation_timer_setup(string_animation);
 }
 
-void string_animation_reset_string_animation(StringAnimation* string_animation) {
+void string_animation_reset(StringAnimation* string_animation) {
     string_animation->str = NULL;
     string_animation->current_max_char = 1;
     string_animation->x = 0;
