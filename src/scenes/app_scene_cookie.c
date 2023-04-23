@@ -6,11 +6,13 @@
 #include "app_scene.h"
 #include "assets_icons.h"
 
+static bool inverted = false;
+
 static void app_scene_cookie_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
-    display_draw_button_left(app->display, "Back");
+    display_draw_button_left(app->display, "Back", inverted);
     // display_draw_button_right(app->display, "Next");
 }
 
@@ -23,6 +25,7 @@ void app_scene_cookie_on_enter(void* context) {
 void app_scene_cookie_on_event(void* context, InputEvent event) {
     App* app = context;
     if(event == INPUT_EVENT_LEFT_PRESSED) scene_manager_previous_scene(app->scene_manager);
+    if(event == INPUT_EVENT_CENTER_PRESSED) inverted = !inverted;
     //    if(event == INPUT_EVENT_RIGHT_PRESSED)
     //        scene_manager_next_scene(app->scene_manager, SceneBrightness);
 }

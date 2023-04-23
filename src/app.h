@@ -3,12 +3,14 @@
 #include "input.h"
 #include "scene_manager.h"
 #include "animation.h"
+#include "string_animation.h"
 
 typedef struct {
     Display* display;
     Input* input;
     SceneManager* scene_manager;
     Animation* animation;
+    StringAnimation* string_animation;
 } App;
 
 App* app_alloc(void);

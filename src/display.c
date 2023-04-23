@@ -98,7 +98,7 @@ uint8_t display_get_string_width(Display* display, const char* str) {
     return string_width;
 }
 
-void display_draw_button_right(Display* display, const char* str) {
+void display_draw_button_right(Display* display, const char* str, bool inverted) {
     const uint8_t button_height = 12;
     const uint8_t vertical_offset = 1;
     const uint8_t horizontal_offset = 3;
@@ -108,13 +108,12 @@ void display_draw_button_right(Display* display, const char* str) {
     const uint8_t icon_width_with_offset = icon_get_width(icon) + icon_h_offset;
     const uint8_t icon_v_offset = icon_get_height(icon) + vertical_offset + 2;
     const uint8_t button_width = string_width + horizontal_offset * 2 + icon_width_with_offset;
-
     const uint8_t x = SCREEN_WIDTH - 1;
     const uint8_t y = SCREEN_HEIGHT - 1;
 
+    if(inverted) display_invert_color(display);
     display_draw_filled_rectangle(
         display, x - button_width, y - button_height, button_width - 1, button_height - 1);
-
     display_invert_color(display);
     display_draw_rectangle(
         display, x - button_width, y - button_height - 1, button_width - 1, button_height);
@@ -122,10 +121,10 @@ void display_draw_button_right(Display* display, const char* str) {
         display, str, x - button_width + horizontal_offset, y - vertical_offset - 10);
     display_draw_icon(
         display, icon, x - horizontal_offset - icon_get_width(icon), y - icon_v_offset);
-    display_invert_color(display);
+    if(!inverted) display_invert_color(display);
 }
 
-void display_draw_button_left(Display* display, const char* str) {
+void display_draw_button_left(Display* display, const char* str, bool inverted) {
     const uint8_t button_height = 12;
     const uint8_t vertical_offset = 1;
     const uint8_t horizontal_offset = 2;
@@ -135,18 +134,17 @@ void display_draw_button_left(Display* display, const char* str) {
     const uint8_t icon_width_with_offset = icon_get_width(icon) + icon_h_offset;
     const uint8_t icon_v_offset = icon_get_height(icon) + vertical_offset + 2;
     const uint8_t button_width = string_width + horizontal_offset * 2 + icon_width_with_offset;
-
     const uint8_t x = 1;
     const uint8_t y = SCREEN_HEIGHT - 1;
 
+    if(inverted) display_invert_color(display);
     display_draw_filled_rectangle(display, x, y - button_height, button_width, button_height - 1);
-
     display_invert_color(display);
     display_draw_rectangle(display, x, y - button_height - 1, button_width, button_height);
     display_draw_string(
         display, str, x + horizontal_offset + icon_width_with_offset + 1, y - vertical_offset - 10);
     display_draw_icon(display, icon, x + horizontal_offset + 1, y - icon_v_offset);
-    display_invert_color(display);
+    if(!inverted) display_invert_color(display);
 }
 
 void display_draw_xbm(
@@ -189,8 +187,11 @@ void display_draw_icon_animation(
     display_draw_xbm(display, icon_data[current_frame], x, y, icon_width, icon_height);
 }
 
-void display_draw_char(Display* display, const char c, uint8_t x, uint8_t y) {
-    display_draw_icon(display, F_Haxrcorp_4089[c - 32], x, y);
+// returns char width
+uint8_t display_draw_char(Display* display, const char c, uint8_t x, uint8_t y) {
+    const Icon* glyph = F_Haxrcorp_4089[c - 32];
+    display_draw_icon(display, glyph, x, y);
+    return icon_get_width(glyph);
 }
 
 void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y) {
@@ -202,11 +203,31 @@ void display_draw_string(Display* display, const char* str, uint8_t x, uint8_t y
             str++;
             continue;
         }
-        const Icon* glyph = F_Haxrcorp_4089[*str - 32];
-        uint8_t glyph_width = icon_get_width(glyph);
-        display_draw_icon(display, glyph, new_x, y);
-        new_x += glyph_width + 1;
+        uint8_t char_width = display_draw_char(display, *str, new_x, y);
+        new_x += char_width + 1;
         str++;
+    }
+}
+
+void display_draw_string_animation(
+    Display* display,
+    const char* str,
+    uint8_t x,
+    uint8_t y,
+    uint8_t max_char) {
+    const char* new_str_ptr = str;
+    uint8_t new_x = x;
+    while(*new_str_ptr) {
+        if(*new_str_ptr == '\n') {
+            new_x = x;
+            y += 10;
+            new_str_ptr++;
+            continue;
+        }
+        if((max_char == 0) || ((new_str_ptr - str) > max_char - 1)) return;
+        uint8_t char_width = display_draw_char(display, *new_str_ptr, new_x, y);
+        new_x += char_width + 1;
+        new_str_ptr++;
     }
 }
 
@@ -240,6 +261,7 @@ void display_clear(Display* display) {
     display_sync_framebuffer(display);
 }
 
+// TODO(drunkbatya): rewrite this fuckin' hardcoded bullshit
 void display_set_brightness(Display* display, uint8_t bright) {
     if(bright < 155) bright = 155;
     if(bright > 254) bright = 254;

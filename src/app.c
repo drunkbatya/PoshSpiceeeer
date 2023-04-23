@@ -12,6 +12,7 @@ App* app_alloc(void) {
     app->input = input_alloc(GPIOA, GPIOA, GPIOA, LL_GPIO_PIN_0, LL_GPIO_PIN_1, LL_GPIO_PIN_2);
     app->scene_manager = scene_manager_alloc(&scene_handlers, app);
     app->animation = animation_alloc();
+    app->string_animation = string_animation_alloc();
     display_init(app->display);
     return app;
 }
@@ -21,6 +22,7 @@ void app_run(App* app) {
     scene_manager_next_scene(app->scene_manager, SceneStart);
     while(true) {
         animation_timer_process(app->animation);
+        string_animation_timer_process(app->string_animation);
         display_execute_draw_callback(app->display);
         display_sync_framebuffer(app->display);
         if(input_recive_new_event(app->input)) {
@@ -30,6 +32,7 @@ void app_run(App* app) {
 }
 
 void app_free(App* app) {
+    string_animation_free(app->string_animation);
     animation_free(app->animation);
     scene_manager_stop(app->scene_manager);
     scene_manager_free(app->scene_manager);
