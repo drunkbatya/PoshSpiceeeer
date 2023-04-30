@@ -8,29 +8,31 @@
 
 static bool inverted = false;
 
-static void app_scene_start_draw_callback(void* context) {
+static void app_scene_lera_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
-    animation_draw_current_frame(app->animation, app->display);
+    // animation_draw_current_frame(app->animation, app->display);
     string_animation_draw_string(app->string_animation, app->display);
     display_draw_button_right(app->display, "Next", inverted);
+    display_draw_button_left(app->display, "Back", inverted);
 }
 
-void app_scene_start_on_enter(void* context) {
+void app_scene_lera_on_enter(void* context) {
     App* app = context;
-    animation_set_animation(app->animation, &A_Start_128x64, 0, 0, true);
+    // animation_set_animation(app->animation, &A_Sorry_128x64, 0, 0, false);
     string_animation_set_string(
-        app->string_animation, "In that day\nthe most beautifull\ngirl were born!", 2, 34, 10);
-    display_set_draw_callback(app->display, app_scene_start_draw_callback, app);
+        app->string_animation, "Scene Lera\n     is under\nconstruction", 37, 9, 10);
+    display_set_draw_callback(app->display, app_scene_lera_draw_callback, app);
 }
 
-void app_scene_start_on_event(void* context, InputEvent event) {
+void app_scene_lera_on_event(void* context, InputEvent event) {
     App* app = context;
     if(event == INPUT_EVENT_RIGHT_PRESSED)
-        scene_manager_next_scene(app->scene_manager, SceneDance);
+        scene_manager_next_scene(app->scene_manager, SceneSorry);
+    if(event == INPUT_EVENT_LEFT_PRESSED) scene_manager_previous_scene(app->scene_manager);
     if(event == INPUT_EVENT_CENTER_PRESSED) inverted = !inverted;
 }
-void app_scene_start_on_exit(void* context) {
+void app_scene_lera_on_exit(void* context) {
     App* app = context;
     string_animation_reset(app->string_animation);
     animation_reset_animation(app->animation);

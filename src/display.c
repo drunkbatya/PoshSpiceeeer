@@ -32,7 +32,7 @@ void display_init(Display* display) {
     st7920_init();
     st7920_graphic_mode(true);
     display_clear_framebuffer(display);
-    display_set_brightness(display, 255);
+    display_set_brightness(display, 240);
 }
 
 void display_set_color(Display* display, DisplayDrawColor color) {

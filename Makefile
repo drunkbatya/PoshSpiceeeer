@@ -47,8 +47,13 @@ src/pwm.c \
 src/assets_icons.c \
 src/scenes/app_scene.c \
 src/scenes/app_scene_start.c \
+src/scenes/app_scene_dance.c \
+src/scenes/app_scene_lera.c \
+src/scenes/app_scene_sorry.c \
 src/scenes/app_scene_stars.c \
 src/scenes/app_scene_cookie.c \
+src/scenes/app_scene_current_moment.c \
+src/scenes/app_scene_meet.c \
 lib/lcd-st7920/st7920.c \
 stm/Core/Src/main.c \
 stm/Core/Src/stm32f4xx_it.c \
