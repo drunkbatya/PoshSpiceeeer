@@ -15,9 +15,9 @@ const Line lines[] = {
     {10, 48, 15, 48, 1},
     {15, 48, 15, 43, 1},
     {15, 43, 128, 43, 4},
-    {100, 43, 100, 6, 2},
-    {100, 6, 120, 6, 2},
-    {120, 6, 120, 43, 2},
+    {100, 43, 100, 6, 3},
+    {100, 6, 120, 6, 3},
+    {120, 6, 120, 43, 3},
     {100, 25, 104, 25, 1}};
 
 static void app_scene_meet_draw_callback(void* context) {
@@ -31,7 +31,7 @@ void app_scene_meet_on_enter(void* context) {
     App* app = context;
     line_animation_set_lines(app->line_animation, lines, (sizeof(lines) / sizeof(Line)), 17);
     string_animation_set_string(
-        app->string_animation, "Scene Meet\n     is under\nconstruction", 37, 9, 10);
+        app->string_animation, "Waiting for you\nin the same place \nand the same now!", 4, 2, 10);
     display_set_draw_callback(app->display, app_scene_meet_draw_callback, app);
 }
 
