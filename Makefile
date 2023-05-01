@@ -41,6 +41,7 @@ src/display.c \
 src/scene_manager.c \
 src/animation.c \
 src/string_animation.c \
+src/line_animation.c \
 src/input.c \
 src/icon.c \
 src/pwm.c \

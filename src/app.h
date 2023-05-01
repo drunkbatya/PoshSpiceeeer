@@ -4,6 +4,7 @@
 #include "scene_manager.h"
 #include "animation.h"
 #include "string_animation.h"
+#include "line_animation.h"
 
 typedef struct {
     Display* display;
@@ -11,6 +12,7 @@ typedef struct {
     SceneManager* scene_manager;
     Animation* animation;
     StringAnimation* string_animation;
+    LineAnimation* line_animation;
 } App;
 
 App* app_alloc(void);

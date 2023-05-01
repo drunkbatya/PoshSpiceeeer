@@ -13,6 +13,7 @@ App* app_alloc(void) {
     app->scene_manager = scene_manager_alloc(&scene_handlers, app);
     app->animation = animation_alloc();
     app->string_animation = string_animation_alloc();
+    app->line_animation = line_animation_alloc();
     display_init(app->display);
     return app;
 }
@@ -23,6 +24,7 @@ void app_run(App* app) {
     while(true) {
         animation_timer_process(app->animation);
         string_animation_timer_process(app->string_animation);
+        line_animation_timer_process(app->line_animation);
         display_execute_draw_callback(app->display);
         display_sync_framebuffer(app->display);
         if(input_recive_new_event(app->input)) {
@@ -32,6 +34,7 @@ void app_run(App* app) {
 }
 
 void app_free(App* app) {
+    line_animation_free(app->line_animation);
     string_animation_free(app->string_animation);
     animation_free(app->animation);
     scene_manager_stop(app->scene_manager);

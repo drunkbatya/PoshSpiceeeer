@@ -67,6 +67,8 @@ void display_draw_line_straight(
     uint8_t y_start,
     uint8_t x_end,
     uint8_t y_end) {
+    // just vertical or horizontal lines
+    if((x_end != x_start) && (y_end != y_start)) return;
     while(x_end > x_start) {
         display_draw_pixel(display, x_start, y_start);
         x_start++;
@@ -75,6 +77,39 @@ void display_draw_line_straight(
         display_draw_pixel(display, x_start, y_start);
         y_start++;
     }
+}
+
+uint8_t
+    display_draw_line_straight_animated(Display* display, Line line, uint16_t current_max_dots) {
+    uint16_t printed_dots = 0;
+    // just vertical or horizontal lines
+    if((line.x_end != line.x_start) && (line.y_end != line.y_start)) return printed_dots;
+    if(line.x_end > line.x_start) {
+        while((line.x_end > line.x_start) && (printed_dots < current_max_dots)) {
+            display_draw_pixel(display, line.x_start, line.y_start);
+            printed_dots++;
+            line.x_start++;
+        }
+    } else if(line.x_start > line.x_end) {
+        while((line.x_start > line.x_end) && (printed_dots < current_max_dots)) {
+            display_draw_pixel(display, line.x_start, line.y_start);
+            printed_dots++;
+            line.x_start--;
+        }
+    } else if(line.y_end > line.y_start) {
+        while((line.y_end > line.y_start) && (printed_dots < current_max_dots)) {
+            display_draw_pixel(display, line.x_start, line.y_start);
+            printed_dots++;
+            line.y_start++;
+        }
+    } else if(line.y_start > line.y_end) {
+        while((line.y_start > line.y_end) && (printed_dots < current_max_dots)) {
+            display_draw_pixel(display, line.x_start, line.y_start);
+            printed_dots++;
+            line.y_start--;
+        }
+    }
+    return printed_dots;
 }
 
 void display_draw_rectangle(Display* display, uint8_t x, uint8_t y, uint8_t width, uint8_t height) {
@@ -236,6 +271,23 @@ void display_draw_string_animation(
         new_x += display_draw_char(display, *new_str_ptr, new_x, y) + 1;
         new_str_ptr++;
     }
+}
+
+uint8_t display_draw_line_animation(
+    Display* display,
+    const Line* const lines,
+    uint16_t lines_count,
+    uint16_t current_max_dot) {
+    uint16_t printed_dots = 0;
+    uint16_t printed_lines = 0;
+    uint8_t step = 0;
+    while((printed_dots < current_max_dot) && (printed_lines < lines_count)) {
+        step = lines[printed_lines].step;
+        printed_dots += display_draw_line_straight_animated(
+            display, lines[printed_lines], current_max_dot - printed_dots);
+        printed_lines++;
+    }
+    return step;
 }
 
 void display_sync_framebuffer(Display* display) {

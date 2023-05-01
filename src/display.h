@@ -27,6 +27,14 @@ typedef struct {
     DisplayDrawColor color;
 } Display;
 
+typedef struct {
+    uint8_t x_start;
+    uint8_t y_start;
+    uint8_t x_end;
+    uint8_t y_end;
+    uint8_t step;
+} Line;
+
 Display* display_alloc(
     SPI_TypeDef* SPI,
     GPIO_TypeDef* reset_pin_port,
@@ -51,6 +59,11 @@ void display_draw_icon_animation(
     uint8_t x,
     uint8_t y,
     uint8_t current_frame);
+uint8_t display_draw_line_animation(
+    Display* display,
+    const Line* const lines,
+    uint16_t lines_count,
+    uint16_t current_max_dot);
 void display_draw_icon(Display* display, const Icon* icon, uint8_t x, uint8_t y);
 // returns char width
 uint8_t display_draw_char(Display* display, const char c, uint8_t x, uint8_t y);

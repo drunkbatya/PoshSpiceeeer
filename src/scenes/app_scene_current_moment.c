@@ -21,7 +21,11 @@ void app_scene_current_moment_on_enter(void* context) {
     App* app = context;
     // animation_set_animation(app->animation, &A_Sorry_128x64, 0, 0, false);
     string_animation_set_string(
-        app->string_animation, "           Scene\nCurrent Moment\n          is under\n    construction", 30, 9, 12);
+        app->string_animation,
+        "           Scene\nCurrent Moment\n          is under\n    construction",
+        30,
+        9,
+        12);
     display_set_draw_callback(app->display, app_scene_current_moment_draw_callback, app);
 }
 
