@@ -13,6 +13,7 @@ static void app_scene_sorry_draw_callback(void* context) {
     display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
     string_animation_draw_string(app->string_animation, app->display);
+    // display_draw_string(app->display, "forget", 100, 3);
     display_draw_button_right(app->display, "Next", inverted);
     display_draw_button_left(app->display, "Back", inverted);
 }
@@ -20,7 +21,7 @@ static void app_scene_sorry_draw_callback(void* context) {
 void app_scene_sorry_on_enter(void* context) {
     App* app = context;
     animation_set_animation(app->animation, &A_Sorry_128x64, 0, 0, false);
-    string_animation_set_string(app->string_animation, "Test", 32, 20, 10);
+    string_animation_set_string(app->string_animation, "    Kazantip will  never\nforget\nyou!", 26, 20, 10);
     display_set_draw_callback(app->display, app_scene_sorry_draw_callback, app);
 }
 
