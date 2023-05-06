@@ -52,6 +52,7 @@ src/scenes/app_scene_dance.c \
 src/scenes/app_scene_lera.c \
 src/scenes/app_scene_sorry.c \
 src/scenes/app_scene_stars.c \
+src/scenes/app_scene_march.c \
 src/scenes/app_scene_cookie.c \
 src/scenes/app_scene_current_moment.c \
 src/scenes/app_scene_meet.c \

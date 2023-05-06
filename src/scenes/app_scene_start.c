@@ -12,15 +12,16 @@ static void app_scene_start_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
-    string_animation_draw_string(app->string_animation, app->display);
+    // string_animation_draw_string(app->string_animation, app->display);
     display_draw_button_right(app->display, "Next", inverted);
 }
 
 void app_scene_start_on_enter(void* context) {
     App* app = context;
-    animation_set_animation(app->animation, &A_Start_128x64, 0, 0, true);
-    string_animation_set_string(
-        app->string_animation, "In that day\nthe most beautifull\ngirl were born!", 2, 34, 10);
+    static const bool animation_reverse_repeat = false;
+    animation_set_animation(app->animation, &A_Start_128x64, 0, 0, animation_reverse_repeat);
+    // string_animation_set_string(
+    //    app->string_animation, "In that day\nthe most beautifull\ngirl were born!", 2, 34, 10);
     display_set_draw_callback(app->display, app_scene_start_draw_callback, app);
 }
 

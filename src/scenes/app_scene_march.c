@@ -8,31 +8,31 @@
 
 static bool inverted = false;
 
-static void app_scene_stars_draw_callback(void* context) {
+static void app_scene_march_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
-    string_animation_draw_string(app->string_animation, app->display);
+    // string_animation_draw_string(app->string_animation, app->display);
     display_draw_button_right(app->display, "Next", inverted);
     display_draw_button_left(app->display, "Back", inverted);
 }
 
-void app_scene_stars_on_enter(void* context) {
+void app_scene_march_on_enter(void* context) {
     App* app = context;
-    animation_set_animation(app->animation, &A_Stars_128x64, 0, 0, false);
-    string_animation_set_string(
-        app->string_animation, "    Is this a star?           \nNo this is a plane!", 29, 9, 10);
-    display_set_draw_callback(app->display, app_scene_stars_draw_callback, app);
+    animation_set_animation(app->animation, &A_March_128x64, 0, 0, false);
+    // string_animation_set_string(
+    //     app->string_animation, "    Kazantip will  never\nforget\nyou!", 26, 20, 10);
+    display_set_draw_callback(app->display, app_scene_march_draw_callback, app);
 }
 
-void app_scene_stars_on_event(void* context, InputEvent event) {
+void app_scene_march_on_event(void* context, InputEvent event) {
     App* app = context;
     if(event == INPUT_EVENT_RIGHT_PRESSED)
-        scene_manager_next_scene(app->scene_manager, SceneMarch);
+        scene_manager_next_scene(app->scene_manager, SceneCookie);
     if(event == INPUT_EVENT_LEFT_PRESSED) scene_manager_previous_scene(app->scene_manager);
     if(event == INPUT_EVENT_CENTER_PRESSED) inverted = !inverted;
 }
-void app_scene_stars_on_exit(void* context) {
+void app_scene_march_on_exit(void* context) {
     App* app = context;
     string_animation_reset(app->string_animation);
     animation_reset_animation(app->animation);
