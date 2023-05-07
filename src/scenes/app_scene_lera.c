@@ -11,18 +11,17 @@ static bool inverted = false;
 static void app_scene_lera_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
-    // animation_draw_current_frame(app->animation, app->display);
-    // string_animation_draw_string(app->string_animation, app->display);
-    display_draw_icon(app->display, &I_Lera_128x64, 0, 0);
+    animation_draw_current_frame(app->animation, app->display);
+    string_animation_draw_string(app->string_animation, app->display);
     display_draw_button_right(app->display, "Next", inverted);
     display_draw_button_left(app->display, "Back", inverted);
 }
 
 void app_scene_lera_on_enter(void* context) {
     App* app = context;
-    // animation_set_animation(app->animation, &A_Lera_128x64, 0, 0, false);
-    // string_animation_set_string(
-    //    app->string_animation, "Scene Lera\n     is under\nconstruction", 37, 9, 10);
+    animation_set_animation(app->animation, &A_Lera_128x64, 0, 0, false);
+    string_animation_set_string(
+        app->string_animation, "Friendship is a real magick!", 9, 1, 10);
     display_set_draw_callback(app->display, app_scene_lera_draw_callback, app);
 }
 
