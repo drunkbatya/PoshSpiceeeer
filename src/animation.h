@@ -29,4 +29,5 @@ void animation_set_animation(
     uint8_t y,
     bool reverse_cycle);
 void animation_reset_animation(Animation* animation);
-void animation_timer_process(Animation* animation);
+// returns true if frame switched
+bool animation_timer_process(Animation* animation);

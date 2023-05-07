@@ -99,10 +99,15 @@ static void animation_switch_frame(Animation* animation) {
     }
 }
 
-void animation_timer_process(Animation* animation) {
-    if(animation->icon == NULL) return;
-    if(LL_TIM_GetCounter(TIM3) > animation->timer_compare_value) {
-        animation_switch_frame(animation);
-        LL_TIM_SetCounter(TIM3, 0);
-    }
+bool animation_timer_process(Animation* animation) {
+    bool success = false;
+    do {
+        if(animation->icon == NULL) break;
+        if(LL_TIM_GetCounter(TIM3) > animation->timer_compare_value) {
+            animation_switch_frame(animation);
+            LL_TIM_SetCounter(TIM3, 0);
+            success = true;
+        }
+    } while(false);
+    return success;
 }

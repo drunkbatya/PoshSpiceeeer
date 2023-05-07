@@ -9,7 +9,8 @@ typedef enum {
     SCENE_EVENT_NONE = 0x00,
     SCENE_EVENT_LEFT_PRESSED = 0x01,
     SCENE_EVENT_RIGHT_PRESSED = 0x02,
-    SCENE_EVENT_CENTER_PRESSED = 0x04
+    SCENE_EVENT_CENTER_PRESSED = 0x04,
+    SCENE_EVENT_ANIMATION_TIMER_ACTION = 0x08
 } SceneEvent;
 
 typedef void (*AppSceneOnEnterCallback)(void* context);

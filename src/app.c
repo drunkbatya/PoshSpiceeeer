@@ -22,7 +22,10 @@ void app_run(App* app) {
     display_clear(app->display);
     scene_manager_next_scene(app->scene_manager, SceneStart);
     while(true) {
-        animation_timer_process(app->animation);
+        if(animation_timer_process(app->animation)) {
+            scene_manager_send_event_to_scene(
+                app->scene_manager, SCENE_EVENT_ANIMATION_TIMER_ACTION);
+        }
         string_animation_timer_process(app->string_animation);
         line_animation_timer_process(app->line_animation);
         display_execute_draw_callback(app->display);
