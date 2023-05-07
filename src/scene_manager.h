@@ -2,12 +2,18 @@
 
 #include <m-array.h>
 #include <stdint.h>
-#include <input.h>
 
 ARRAY_DEF(SceneManagerIdStack, uint32_t, M_DEFAULT_OPLIST);
 
+typedef enum {
+    SCENE_EVENT_NONE = 0x00,
+    SCENE_EVENT_LEFT_PRESSED = 0x01,
+    SCENE_EVENT_RIGHT_PRESSED = 0x02,
+    SCENE_EVENT_CENTER_PRESSED = 0x04
+} SceneEvent;
+
 typedef void (*AppSceneOnEnterCallback)(void* context);
-typedef void (*AppSceneOnEventCallback)(void* context, InputEvent event);
+typedef void (*AppSceneOnEventCallback)(void* context, SceneEvent event);
 typedef void (*AppSceneOnExitCallback)(void* context);
 
 typedef struct {
@@ -28,4 +34,4 @@ void scene_manager_free(SceneManager* scene_manager);
 void scene_manager_next_scene(SceneManager* scene_manager, uint32_t next_scene_id);
 void scene_manager_previous_scene(SceneManager* scene_manager);
 void scene_manager_stop(SceneManager* scene_manager);
-void scene_manager_send_event_to_scene(SceneManager* scene_manager, InputEvent event);
+void scene_manager_send_event_to_scene(SceneManager* scene_manager, SceneEvent event);

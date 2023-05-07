@@ -25,11 +25,11 @@ void app_scene_start_on_enter(void* context) {
     display_set_draw_callback(app->display, app_scene_start_draw_callback, app);
 }
 
-void app_scene_start_on_event(void* context, InputEvent event) {
+void app_scene_start_on_event(void* context, SceneEvent event) {
     App* app = context;
-    if(event == INPUT_EVENT_RIGHT_PRESSED)
+    if(event == SCENE_EVENT_RIGHT_PRESSED)
         scene_manager_next_scene(app->scene_manager, SceneDance);
-    if(event == INPUT_EVENT_CENTER_PRESSED) inverted = !inverted;
+    if(event == SCENE_EVENT_CENTER_PRESSED) inverted = !inverted;
 }
 void app_scene_start_on_exit(void* context) {
     App* app = context;

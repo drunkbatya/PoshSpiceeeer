@@ -35,7 +35,7 @@ void app_scene_meet_on_enter(void* context) {
     display_set_draw_callback(app->display, app_scene_meet_draw_callback, app);
 }
 
-void app_scene_meet_on_event(void* context, InputEvent event) {
+void app_scene_meet_on_event(void* context, SceneEvent event) {
     App* app = context;
     UNUSED(app);
 }

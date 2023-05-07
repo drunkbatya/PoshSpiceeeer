@@ -20,7 +20,7 @@ extern const SceneManagerHandlers scene_handlers;
 
 // Generate scene on_event handlers declaration
 #define ADD_SCENE(prefix, name, id) \
-    void prefix##_scene_##name##_on_event(void* context, InputEvent event);
+    void prefix##_scene_##name##_on_event(void* context, SceneEvent event);
 #include "app_scene_config.h"
 #undef ADD_SCENE
 

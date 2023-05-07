@@ -36,8 +36,8 @@ void scene_manager_previous_scene(SceneManager* scene_manager) {
     }
 }
 
-void scene_manager_send_event_to_scene(SceneManager* scene_manager, InputEvent event) {
-    if(event == INPUT_EVENT_NONE) return;
+void scene_manager_send_event_to_scene(SceneManager* scene_manager, SceneEvent event) {
+    if(event == SCENE_EVENT_NONE) return;
     if(SceneManagerIdStack_size(scene_manager->scene_id_stack) > 0) {
         uint32_t* scene_id_p = SceneManagerIdStack_back(scene_manager->scene_id_stack);
         uint32_t scene_id = *scene_id_p;

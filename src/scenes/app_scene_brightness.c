@@ -22,13 +22,13 @@ void app_scene_brightness_on_enter(void* context) {
     // display_draw_string(app->display, "A", 60, 0);
 }
 
-void app_scene_brightness_on_event(void* context, InputEvent event) {
+void app_scene_brightness_on_event(void* context, SceneEvent event) {
     App* app = context;
-    if(event == INPUT_EVENT_RIGHT_PRESSED)
+    if(event == SCENE_EVENT_RIGHT_PRESSED)
         display_set_brightness(app->display, display_get_brightness(app->display) + 5);
-    if(event == INPUT_EVENT_LEFT_PRESSED)
+    if(event == SCENE_EVENT_LEFT_PRESSED)
         display_set_brightness(app->display, display_get_brightness(app->display) - 5);
-    if(event == INPUT_EVENT_CENTER_PRESSED) scene_manager_previous_scene(app->scene_manager);
+    if(event == SCENE_EVENT_CENTER_PRESSED) scene_manager_previous_scene(app->scene_manager);
 }
 void app_scene_brightness_on_exit(void* context) {
     App* app = context;

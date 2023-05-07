@@ -32,31 +32,31 @@ Input* input_alloc(
     input->button_left_pin = button_left_pin;
     input->button_right_pin = button_right_pin;
     input->button_center_pin = button_center_pin;
-    input->event = INPUT_EVENT_NONE;
+    input->event = SCENE_EVENT_NONE;
     input_pin_init(input->button_left_port, input->button_left_pin);
     input_pin_init(input->button_right_port, input->button_right_pin);
     input_pin_init(input->button_center_port, input->button_center_pin);
     return input;
 }
 
-static InputEvent input_get_new_event(Input* input) {
+static SceneEvent input_get_new_event(Input* input) {
     if(!LL_GPIO_IsInputPinSet(input->button_right_port, input->button_right_pin))
-        return INPUT_EVENT_RIGHT_PRESSED;
+        return SCENE_EVENT_RIGHT_PRESSED;
     if(!LL_GPIO_IsInputPinSet(input->button_left_port, input->button_left_pin))
-        return INPUT_EVENT_LEFT_PRESSED;
+        return SCENE_EVENT_LEFT_PRESSED;
     if(!LL_GPIO_IsInputPinSet(input->button_center_port, input->button_center_pin))
-        return INPUT_EVENT_CENTER_PRESSED;
-    return INPUT_EVENT_NONE;
+        return SCENE_EVENT_CENTER_PRESSED;
+    return SCENE_EVENT_NONE;
 }
 
 bool input_recive_new_event(Input* input) {
-    InputEvent new_event = input_get_new_event(input);
+    SceneEvent new_event = input_get_new_event(input);
     if(new_event == input->event) return false;
     input->event = new_event;
     return true;
 }
 
-InputEvent input_get_event(Input* input) {
+SceneEvent input_get_event(Input* input) {
     return input->event;
 }
 

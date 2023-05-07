@@ -9,7 +9,7 @@ void (*const on_enter_handlers[])(void*) = {
 
 // Generate scene on_event handlers array
 #define ADD_SCENE(prefix, name, id) prefix##_scene_##name##_on_event,
-void (*const on_event_handlers[])(void* context, InputEvent event) = {
+void (*const on_event_handlers[])(void* context, SceneEvent event) = {
 #include "app_scene_config.h"
 };
 #undef ADD_SCENE
