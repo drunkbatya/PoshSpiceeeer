@@ -12,13 +12,18 @@ static void app_scene_cookie_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
+    display_set_color(app->display, DisplayDrawColorBlack);
+    string_animation_draw_string(app->string_animation, app->display);
+    display_set_color(app->display, DisplayDrawColorWhite);
     display_draw_button_left(app->display, "Back", inverted);
     display_draw_button_right(app->display, "Next", inverted);
 }
 
 void app_scene_cookie_on_enter(void* context) {
     App* app = context;
-    animation_set_animation(app->animation, &A_Cookie_128x64, 0, 0, true);
+    const bool animation_reverse_repeat = false;
+    animation_set_animation(app->animation, &A_Cookie_128x64, 0, 0, animation_reverse_repeat);
+    string_animation_set_string(app->string_animation, "A long way\n  to home", 11, 10, 10);
     display_set_draw_callback(app->display, app_scene_cookie_draw_callback, app);
 }
 

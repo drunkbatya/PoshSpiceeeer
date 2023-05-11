@@ -206,7 +206,7 @@ void display_draw_xbm(
         uint8_t byte_column = *(data + i);
         for(uint8_t bit = 0; bit < 8; bit++) {
             uint8_t target_x = (((8 * i) + bit) % width) + x;
-            uint8_t target_y = ((8 * i) / (width)) + y;
+            uint8_t target_y = ((8 * i) / width) + y;
             if((byte_column >> bit) & 0x01) display_draw_pixel(display, target_x, target_y);
         }
     }

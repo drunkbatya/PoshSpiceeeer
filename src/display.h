@@ -51,6 +51,14 @@ void display_execute_draw_callback(Display* display);
 void display_clear_framebuffer(Display* display);
 void display_clear(Display* display);
 void display_draw_pixel(Display* display, uint8_t x, uint8_t y);
+void display_draw_rectangle(Display* display, uint8_t x, uint8_t y, uint8_t width, uint8_t height);
+void display_draw_filled_rectangle(
+    Display* display,
+    uint8_t x,
+    uint8_t y,
+    uint8_t width,
+    uint8_t height);
+uint8_t display_get_string_width(Display* display, const char* str);
 void display_set_brightness(Display* display, uint8_t bright);
 uint8_t display_get_brightness(Display* display);
 void display_draw_icon_animation(

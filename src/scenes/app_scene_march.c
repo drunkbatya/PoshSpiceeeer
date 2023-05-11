@@ -8,11 +8,26 @@
 
 static bool inverted = false;
 
+static void app_scene_march_draw_string(App* app) {
+    const char* str = string_animation_get_string(app->string_animation);
+    const uint8_t x = 1;
+    const uint8_t y = 1;
+    const uint8_t padding = 2;
+    const uint8_t str_width = display_get_string_width(app->display, str);
+    display_set_color(app->display, DisplayDrawColorWhite);
+    display_draw_filled_rectangle(
+        app->display, x, y, (padding + str_width + padding + 1) - 1, 10 + padding);
+    display_set_color(app->display, DisplayDrawColorBlack);
+    display_draw_rectangle(app->display, x, y, (padding + str_width + padding + 1), 10 + padding);
+    string_animation_draw_string(app->string_animation, app->display);
+    display_set_color(app->display, DisplayDrawColorWhite);
+}
+
 static void app_scene_march_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
-    // string_animation_draw_string(app->string_animation, app->display);
+    app_scene_march_draw_string(app);
     display_draw_button_right(app->display, "Next", inverted);
     display_draw_button_left(app->display, "Back", inverted);
 }
@@ -20,8 +35,7 @@ static void app_scene_march_draw_callback(void* context) {
 void app_scene_march_on_enter(void* context) {
     App* app = context;
     animation_set_animation(app->animation, &A_March_128x64, 0, 0, false);
-    // string_animation_set_string(
-    //     app->string_animation, "    Kazantip will  never\nforget\nyou!", 26, 20, 10);
+    string_animation_set_string(app->string_animation, "MArchI or March?", 4, 3, 8);
     display_set_draw_callback(app->display, app_scene_march_draw_callback, app);
 }
 

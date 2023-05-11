@@ -23,3 +23,4 @@ void string_animation_set_string(
     uint8_t freq);
 void string_animation_reset(StringAnimation* string_animation);
 void string_animation_timer_process(StringAnimation* string_animation);
+const char* string_animation_get_string(StringAnimation* string_animation);

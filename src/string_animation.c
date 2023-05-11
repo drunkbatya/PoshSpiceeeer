@@ -86,3 +86,7 @@ void string_animation_timer_process(StringAnimation* string_animation) {
         LL_TIM_SetCounter(TIM2, 0);
     }
 }
+
+const char* string_animation_get_string(StringAnimation* string_animation) {
+    return string_animation->str;
+}
