@@ -15,6 +15,8 @@ typedef struct {
     uint8_t y;
     uint8_t current_frame;
     bool reverse_cycle;
+    bool running;
+    bool one_time;
     AnimationDirection direction;
     uint32_t timer_compare_value;
 } Animation;
@@ -27,7 +29,8 @@ void animation_set_animation(
     const Icon* icon,
     uint8_t x,
     uint8_t y,
-    bool reverse_cycle);
+    bool reverse_cycle,
+    bool one_time);
 void animation_reset_animation(Animation* animation);
 // returns true if frame switched
 bool animation_timer_process(Animation* animation);

@@ -18,7 +18,15 @@ static void app_scene_current_moment_draw_callback(void* context) {
 
 void app_scene_current_moment_on_enter(void* context) {
     App* app = context;
-    animation_set_animation(app->animation, &A_CurrentMoment_128x64, 0, 0, false);
+    const bool animation_reverse_repeat = false;
+    const bool animation_play_once = true;
+    animation_set_animation(
+        app->animation,
+        &A_CurrentMoment_128x64,
+        0,
+        0,
+        animation_reverse_repeat,
+        animation_play_once);
     display_set_draw_callback(app->display, app_scene_current_moment_draw_callback, app);
 }
 

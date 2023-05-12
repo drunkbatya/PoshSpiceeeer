@@ -19,7 +19,10 @@ static void app_scene_dance_draw_callback(void* context) {
 
 void app_scene_dance_on_enter(void* context) {
     App* app = context;
-    animation_set_animation(app->animation, &A_Dance_128x64, 0, 0, false);
+    const bool animation_reverse_repeat = false;
+    const bool animation_play_once = false;
+    animation_set_animation(
+        app->animation, &A_Dance_128x64, 0, 0, animation_reverse_repeat, animation_play_once);
     string_animation_set_string(
         app->string_animation, "You were\n   always\n stronger\n     than\n   others", 87, 1, 11);
     display_set_draw_callback(app->display, app_scene_dance_draw_callback, app);

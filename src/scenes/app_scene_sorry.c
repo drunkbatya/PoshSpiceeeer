@@ -20,7 +20,10 @@ static void app_scene_sorry_draw_callback(void* context) {
 
 void app_scene_sorry_on_enter(void* context) {
     App* app = context;
-    animation_set_animation(app->animation, &A_Sorry_128x64, 0, 0, false);
+    const bool animation_reverse_repeat = false;
+    const bool animation_play_once = false;
+    animation_set_animation(
+        app->animation, &A_Sorry_128x64, 0, 0, animation_reverse_repeat, animation_play_once);
     string_animation_set_string(
         app->string_animation, "    Kazantip will  never\nforget\nyou!", 26, 20, 10);
     display_set_draw_callback(app->display, app_scene_sorry_draw_callback, app);

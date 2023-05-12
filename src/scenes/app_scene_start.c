@@ -18,7 +18,9 @@ static void app_scene_start_draw_callback(void* context) {
 void app_scene_start_on_enter(void* context) {
     App* app = context;
     const bool animation_reverse_repeat = false;
-    animation_set_animation(app->animation, &A_Start_128x64, 0, 0, animation_reverse_repeat);
+    const bool animation_play_once = false;
+    animation_set_animation(
+        app->animation, &A_Start_128x64, 0, 0, animation_reverse_repeat, animation_play_once);
     display_set_draw_callback(app->display, app_scene_start_draw_callback, app);
 }
 

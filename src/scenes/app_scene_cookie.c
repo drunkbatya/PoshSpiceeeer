@@ -22,7 +22,9 @@ static void app_scene_cookie_draw_callback(void* context) {
 void app_scene_cookie_on_enter(void* context) {
     App* app = context;
     const bool animation_reverse_repeat = false;
-    animation_set_animation(app->animation, &A_Cookie_128x64, 0, 0, animation_reverse_repeat);
+    const bool animation_play_once = false;
+    animation_set_animation(
+        app->animation, &A_Cookie_128x64, 0, 0, animation_reverse_repeat, animation_play_once);
     string_animation_set_string(app->string_animation, "A long way\n  to home", 11, 10, 10);
     display_set_draw_callback(app->display, app_scene_cookie_draw_callback, app);
 }

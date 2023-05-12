@@ -5,6 +5,7 @@
 static void animation_timer_stop(Animation* animation) {
     LL_TIM_DeInit(TIM3);
     animation->timer_compare_value = 0;
+    animation->running = false;
 }
 
 static void animation_timer_setup(Animation* animation) {
@@ -31,6 +32,8 @@ Animation* animation_alloc(void) {
     animation->current_frame = 0;
     animation->direction = AnimationDirectionForward;
     animation->timer_compare_value = 0;
+    animation->one_time = false;
+    animation->running = false;
     return animation;
 }
 
@@ -53,13 +56,16 @@ void animation_set_animation(
     const Icon* icon,
     uint8_t x,
     uint8_t y,
-    bool reverse_cycle) {
+    bool reverse_cycle,
+    bool one_time) {
     animation->icon = icon;
     animation->current_frame = 0;
     animation->reverse_cycle = reverse_cycle;
     animation->x = x;
     animation->y = y;
     animation_timer_setup(animation);
+    animation->one_time = one_time;
+    animation->running = true;
 }
 
 void animation_reset_animation(Animation* animation) {
@@ -69,6 +75,7 @@ void animation_reset_animation(Animation* animation) {
     animation->y = 0;
     animation->direction = AnimationDirectionForward;
     animation_timer_stop(animation);
+    animation->running = false;
 }
 
 static void animation_toggle_direction(Animation* animation) {
@@ -85,6 +92,7 @@ static void animation_switch_frame(Animation* animation) {
     } else if(
         animation->current_frame == (icon_get_frame_count(animation->icon) - 1) &&
         animation->direction == AnimationDirectionForward) {
+        if(animation->one_time) return animation_timer_stop(animation);
         if(animation->reverse_cycle) {
             animation_toggle_direction(animation);
         } else {
@@ -103,6 +111,7 @@ bool animation_timer_process(Animation* animation) {
     bool success = false;
     do {
         if(animation->icon == NULL) break;
+        if(!animation->running) break;
         if(LL_TIM_GetCounter(TIM3) > animation->timer_compare_value) {
             animation_switch_frame(animation);
             LL_TIM_SetCounter(TIM3, 0);
