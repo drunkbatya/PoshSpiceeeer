@@ -35,7 +35,7 @@ static void app_scene_march_draw_callback(void* context) {
 void app_scene_march_on_enter(void* context) {
     App* app = context;
     animation_set_animation(app->animation, &A_March_128x64, 0, 0, false);
-    string_animation_set_string(app->string_animation, "MArchI or March?", 4, 3, 8);
+    string_animation_set_string(app->string_animation, "MArchi or March?", 4, 3, 8);
     display_set_draw_callback(app->display, app_scene_march_draw_callback, app);
 }
 

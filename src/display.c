@@ -199,10 +199,14 @@ void display_draw_xbm(
     uint8_t width,
     uint8_t height) {
     data++;
+    if(width == SCREEN_WIDTH && height == SCREEN_HEIGHT) {
+        memcpy(display->frame_buffer, data, ((SCREEN_WIDTH * SCREEN_HEIGHT) / 8));
+        return;
+    }
     if(width % 8 != 0) {
         width = ((width / 8) + 1) * 8;
     }
-    for(int i = 0; i < width * height / 8; i++) {
+    for(uint16_t i = 0; i < width * height / 8; i++) {
         uint8_t byte_column = *(data + i);
         for(uint8_t bit = 0; bit < 8; bit++) {
             uint8_t target_x = (((8 * i) + bit) % width) + x;
