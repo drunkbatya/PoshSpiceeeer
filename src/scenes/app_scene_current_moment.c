@@ -6,14 +6,15 @@
 #include "app_scene.h"
 #include "assets_icons.h"
 
-static bool inverted = false;
+static bool left_inverted = false;
+static bool right_inverted = false;
 
 static void app_scene_current_moment_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
-    display_draw_button_right(app->display, "Next", inverted);
-    display_draw_button_left(app->display, "Back", inverted);
+    display_draw_button_right(app->display, "Next", right_inverted);
+    display_draw_button_left(app->display, "Back", left_inverted);
 }
 
 void app_scene_current_moment_on_enter(void* context) {
@@ -32,9 +33,20 @@ void app_scene_current_moment_on_enter(void* context) {
 
 void app_scene_current_moment_on_event(void* context, SceneEvent event) {
     App* app = context;
-    if(event == SCENE_EVENT_RIGHT_PRESSED) scene_manager_next_scene(app->scene_manager, SceneMeet);
-    if(event == SCENE_EVENT_LEFT_PRESSED) scene_manager_previous_scene(app->scene_manager);
-    if(event == SCENE_EVENT_CENTER_PRESSED) inverted = !inverted;
+    static uint8_t animation_event_counter = 0;
+    static bool animation_right_blinking = false;
+    if(event == SCENE_EVENT_RIGHT_PRESSED) {
+        scene_manager_next_scene(app->scene_manager, SceneMeet);
+    } else if(event == SCENE_EVENT_LEFT_PRESSED) {
+        scene_manager_previous_scene(app->scene_manager);
+    } else if(event == SCENE_EVENT_CENTER_PRESSED) {
+        left_inverted = !left_inverted;
+    } else if(event == SCENE_EVENT_ANIMATION_STOPED) {
+        animation_right_blinking = true;
+    } else if(event == SCENE_EVENT_ANIMATION_TIMER_ACTION && animation_right_blinking) {
+        if((animation_event_counter % 3) == 0) right_inverted = !right_inverted;
+        animation_event_counter++;
+    }
 }
 void app_scene_current_moment_on_exit(void* context) {
     App* app = context;

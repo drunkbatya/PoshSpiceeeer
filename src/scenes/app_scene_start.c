@@ -32,8 +32,6 @@ void app_scene_start_on_event(void* context, SceneEvent event) {
     } else if(event == SCENE_EVENT_ANIMATION_TIMER_ACTION) {
         if((animation_event_counter % 3) == 0) buttons_inverted = !buttons_inverted;
         animation_event_counter++;
-    } else if(event == SCENE_EVENT_CENTER_PRESSED) {
-        buttons_inverted = !buttons_inverted;
     }
 }
 void app_scene_start_on_exit(void* context) {

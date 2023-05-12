@@ -34,6 +34,7 @@ Animation* animation_alloc(void) {
     animation->timer_compare_value = 0;
     animation->one_time = false;
     animation->running = false;
+    animation->scene_event = SCENE_EVENT_NONE;
     return animation;
 }
 
@@ -76,6 +77,7 @@ void animation_reset_animation(Animation* animation) {
     animation->direction = AnimationDirectionForward;
     animation_timer_stop(animation);
     animation->running = false;
+    animation->scene_event = SCENE_EVENT_NONE;
 }
 
 static void animation_toggle_direction(Animation* animation) {
@@ -92,7 +94,11 @@ static void animation_switch_frame(Animation* animation) {
     } else if(
         animation->current_frame == (icon_get_frame_count(animation->icon) - 1) &&
         animation->direction == AnimationDirectionForward) {
-        if(animation->one_time) return animation_timer_stop(animation);
+        if(animation->one_time) {
+            animation->scene_event = SCENE_EVENT_ANIMATION_STOPED;
+            animation->running = false;
+            return;
+        }
         if(animation->reverse_cycle) {
             animation_toggle_direction(animation);
         } else {
@@ -107,16 +113,23 @@ static void animation_switch_frame(Animation* animation) {
     }
 }
 
-bool animation_timer_process(Animation* animation) {
-    bool success = false;
-    do {
-        if(animation->icon == NULL) break;
-        if(!animation->running) break;
-        if(LL_TIM_GetCounter(TIM3) > animation->timer_compare_value) {
-            animation_switch_frame(animation);
-            LL_TIM_SetCounter(TIM3, 0);
-            success = true;
-        }
-    } while(false);
-    return success;
+void animation_timer_process(Animation* animation) {
+    if(LL_TIM_GetCounter(TIM3) > animation->timer_compare_value) {
+        animation->scene_event = SCENE_EVENT_ANIMATION_TIMER_ACTION;
+        LL_TIM_SetCounter(TIM3, 0);
+        if(animation->icon == NULL) return;
+        if(!animation->running) return;
+        animation_switch_frame(animation);
+    }
+}
+
+bool animation_has_new_event(Animation* animation) {
+    if(animation->scene_event != SCENE_EVENT_NONE) return true;
+    return false;
+}
+
+SceneEvent animation_get_event(Animation* animation) {
+    SceneEvent event = animation->scene_event;
+    animation->scene_event = SCENE_EVENT_NONE;
+    return event;
 }

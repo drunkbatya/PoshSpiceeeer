@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "display.h"
 #include "icon.h"
+#include "scene_manager.h"
 
 typedef enum {
     AnimationDirectionForward,
@@ -19,6 +20,7 @@ typedef struct {
     bool one_time;
     AnimationDirection direction;
     uint32_t timer_compare_value;
+    SceneEvent scene_event;
 } Animation;
 
 Animation* animation_alloc(void);
@@ -32,5 +34,6 @@ void animation_set_animation(
     bool reverse_cycle,
     bool one_time);
 void animation_reset_animation(Animation* animation);
-// returns true if frame switched
-bool animation_timer_process(Animation* animation);
+void animation_timer_process(Animation* animation);
+bool animation_has_new_event(Animation* animation);
+SceneEvent animation_get_event(Animation* animation);
