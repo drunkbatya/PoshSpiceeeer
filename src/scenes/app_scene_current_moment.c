@@ -8,6 +8,7 @@
 
 static bool left_inverted = false;
 static bool right_inverted = false;
+static bool animation_right_blinking = false;
 
 static void app_scene_current_moment_draw_callback(void* context) {
     App* app = context;
@@ -34,7 +35,6 @@ void app_scene_current_moment_on_enter(void* context) {
 void app_scene_current_moment_on_event(void* context, SceneEvent event) {
     App* app = context;
     static uint8_t animation_event_counter = 0;
-    static bool animation_right_blinking = false;
     if(event == SCENE_EVENT_RIGHT_PRESSED) {
         scene_manager_next_scene(app->scene_manager, SceneMeet);
     } else if(event == SCENE_EVENT_LEFT_PRESSED) {
@@ -50,6 +50,8 @@ void app_scene_current_moment_on_event(void* context, SceneEvent event) {
 }
 void app_scene_current_moment_on_exit(void* context) {
     App* app = context;
+    animation_right_blinking = false;
+    right_inverted = false;
     animation_reset_animation(app->animation);
     display_reset_draw_callback(app->display);
     display_clear_framebuffer(app->display);

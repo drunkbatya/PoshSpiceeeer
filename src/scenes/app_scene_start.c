@@ -23,7 +23,7 @@ void app_scene_start_on_enter(void* context) {
     animation_set_animation(
         app->animation, &A_Start_128x64, 0, 0, animation_reverse_repeat, animation_play_once);
     string_animation_set_string(
-        app->string_animation, "Hey girl,\nopen the walls\nplay with your dolls", 3, 31, 10);
+        app->string_animation, "Hey girl,\nopen the walls\nPlay with your dolls", 3, 31, 10);
     display_set_draw_callback(app->display, app_scene_start_draw_callback, app);
 }
 
@@ -39,6 +39,8 @@ void app_scene_start_on_event(void* context, SceneEvent event) {
 }
 void app_scene_start_on_exit(void* context) {
     App* app = context;
+    buttons_inverted = false;
+    string_animation_reset(app->string_animation);
     animation_reset_animation(app->animation);
     display_reset_draw_callback(app->display);
     display_clear_framebuffer(app->display);
