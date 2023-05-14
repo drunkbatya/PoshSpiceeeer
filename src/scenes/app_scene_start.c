@@ -12,6 +12,7 @@ static void app_scene_start_draw_callback(void* context) {
     App* app = context;
     display_clear_framebuffer(app->display);
     animation_draw_current_frame(app->animation, app->display);
+    string_animation_draw_string(app->string_animation, app->display);
     display_draw_button_right(app->display, "Next", buttons_inverted);
 }
 
@@ -21,6 +22,8 @@ void app_scene_start_on_enter(void* context) {
     const bool animation_play_once = false;
     animation_set_animation(
         app->animation, &A_Start_128x64, 0, 0, animation_reverse_repeat, animation_play_once);
+    string_animation_set_string(
+        app->string_animation, "Hey girl,\nopen the walls\nplay with your dolls", 3, 31, 10);
     display_set_draw_callback(app->display, app_scene_start_draw_callback, app);
 }
 
