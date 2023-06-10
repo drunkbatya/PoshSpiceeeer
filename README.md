@@ -25,3 +25,27 @@ Scene Start:
 Scene Dance:
 
 ![Scene Dance](/github-assets/scenes/scene_dance_scaled_5x_minified.gif)
+
+Scene Lera:
+
+![Scene Lera](/github-assets/scenes/scene_lera_scaled_5x_minified.gif)
+
+Scene Sorry:
+
+![Scene Sorry](/github-assets/scenes/scene_sorry_scaled_5x_minified.gif)
+
+Scene Stars:
+
+![Scene Stars](/github-assets/scenes/scene_stars_scaled_5x_minified.gif)
+
+Scene March:
+
+![Scene March](/github-assets/scenes/scene_march_scaled_5x_minified.gif)
+
+Scene Cookie:
+
+![Scene Cookie](/github-assets/scenes/scene_cookie_scaled_5x_minified.gif)
+
+Scene Current Moment:
+
+![Scene Current Moment](/github-assets/scenes/scene_current_moment_scaled_5x_minified.gif)
